@@ -1,0 +1,24 @@
+site_name: WTFunk is Deep Learning
+site_description: Learn DL with clarity. From first neuron to CNNs.
+site_url: https://pchambet.github.io/wtf-is-deep-learning/
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.sections
+    - content.code.copy
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Guides: guides.md
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - toc:
+      permalink: true
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji
+  - pymdownx.tabbed
