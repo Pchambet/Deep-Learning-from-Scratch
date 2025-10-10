@@ -1,6 +1,9 @@
 site_name: WTFunk is Deep Learning
 site_description: Learn DL with clarity. From first neuron to CNNs.
 site_url: https://pchambet.github.io/wtf-is-deep-learning/
+repo_url: https://github.com/Pchambet/wtf-is-deep-learning
+repo_name: Pchambet/wtf-is-deep-learning
+edit_uri: edit/main/docs/
 theme:
   name: material
   features:
