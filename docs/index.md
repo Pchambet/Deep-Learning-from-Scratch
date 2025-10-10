@@ -1,23 +1,28 @@
 # WTFunk is Deep Learning
 
-Learn Deep Learning with clarity. No black boxes. No shortcuts. Just code and understanding.
+Your new learning space for AI — from first neuron to production‑ready intuition. Clear mental models, runnable code, and elegant visuals.
 
-::: info
-This is the free, public hub for the WTFunk journey. You can read, run notebooks, and preview premium guides.
-:::
+[Get started →](getting-started.md){ .md-button .md-button--primary }
+[See premium guides →](guides.md){ .md-button }
+[Star on GitHub](https://github.com/Pchambet/wtf-is-deep-learning){ .md-button }
+[Open MNIST in Colab](https://colab.research.google.com/github/Pchambet/mnist-case-study/blob/main/mnist.ipynb){ .md-button }
+
+---
+
+## Why this space?
+
+- Understand deeply: we build intuition first, with visuals and honest math. No black boxes.
+- Learn by doing: every idea ships with runnable notebooks and clean utilities (`widl`).
+- From MLPs to CNNs: a step‑by‑step path — pixels → predictions → patterns.
+
+---
 
 ## Start here
 
 - Getting started: environment + how to run notebooks
-- Open notebooks in Colab with one click (GPU-friendly)
+- Open notebooks in Colab with one click (GPU‑friendly)
 
 [Get started →](getting-started.md){ .md-button .md-button--primary }
-
-## What you’ll find
-
-- Clear theory, visual intuition, and honest math
-- Hands-on notebooks you can run locally or in Colab
-- Reusable utilities (`widl`) so your code stays clean
 
 ## Premium Guides (teasers)
 

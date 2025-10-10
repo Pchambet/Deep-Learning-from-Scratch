@@ -9,7 +9,28 @@ theme:
   features:
     - navigation.instant
     - navigation.sections
+    - navigation.top
+    - navigation.footer
     - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.integrate
+  icon:
+    logo: material/brain
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
@@ -24,4 +45,6 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.highlight
   - pymdownx.inlinehilite
+extra_css:
+  - styles/overrides.css
   - pymdownx.tabbed
