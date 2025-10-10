@@ -19,7 +19,6 @@ markdown_extensions:
   - attr_list
   - pymdownx.details
   - pymdownx.superfences
-  - pymdownx.emoji
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.tabbed
