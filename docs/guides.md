@@ -8,7 +8,7 @@ Welcome to the premium section. Start free, upgrade when you’re ready to go de
 - Format: PDF + companion code (script + notebook)
 - Case study code: `mnist-case-study`
 
-[Preview](/assets/mnist.pdf){ target=_blank } · [Buy](mailto:pierre@example.com?subject=Buy%20Guide%202){ .md-button .md-button--primary }
+[Preview](assets/mnist.pdf){ target=_blank } · [Buy](mailto:pierre@example.com?subject=Buy%20Guide%202){ .md-button .md-button--primary }
 
 ## Guide 3 — CNN on MNIST (Premium)
 
@@ -16,7 +16,7 @@ Welcome to the premium section. Start free, upgrade when you’re ready to go de
 - Format: PDF + companion code (script + notebook)
 - Case study code: `CNN-case-study`
 
-[Preview](/assets/CNN.pdf){ target=_blank } · [Buy](mailto:pierre@example.com?subject=Buy%20Guide%203){ .md-button .md-button--primary }
+[Preview](assets/CNN.pdf){ target=_blank } · [Buy](mailto:pierre@example.com?subject=Buy%20Guide%203){ .md-button .md-button--primary }
 
 ---
 
