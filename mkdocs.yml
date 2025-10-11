@@ -33,6 +33,7 @@ nav:
   - Home: index.md
   - Getting Started: getting-started.md
   - Guides: guides.md
+  - Notebooks: notebooks.md
 markdown_extensions:
   - admonition
   - footnotes
