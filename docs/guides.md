@@ -2,6 +2,13 @@
 
 Less but better. Curated, focused, and beautiful.
 
+## Guide 1 — Deep Learning Fundamentals
+
+- What you learn: a curated tour from perceptrons to modern training loops, math you can use, and intuitions that stick.
+- Format: PDF (readable, printable, beautifully typeset)
+
+[Read preview](assets/fundamentals.pdf){ target=_blank }
+
 ## Guide 2 — MLP on MNIST (Premium)
 
 - What you learn: full MLP pipeline, normalization, flattening, softmax + cross-entropy, training curves, evaluation.
