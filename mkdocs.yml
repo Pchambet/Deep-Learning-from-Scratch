@@ -8,13 +8,8 @@ theme:
   name: material
   features:
     - navigation.instant
-    - navigation.sections
     - navigation.top
-    - navigation.footer
     - content.code.copy
-    - content.code.annotate
-    - content.tabs.link
-    - toc.integrate
   icon:
     logo: material/brain
     repo: fontawesome/brands/github
@@ -31,6 +26,9 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
 nav:
   - Home: index.md
   - Getting Started: getting-started.md

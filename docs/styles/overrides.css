@@ -1,67 +1,26 @@
 :root {
-  /* Elegant, modern palette inspired by top learning platforms */
-  --md-primary-fg-color: #3f51b5; /* indigo 500 */
-  --md-primary-fg-color--light: #6573c3;
-  --md-primary-fg-color--dark: #2c387e;
-  --md-accent-fg-color: #00bcd4; /* cyan 500 */
+  /* Subtle, premium palette */
+  --md-primary-fg-color: #2c387e; /* deeper indigo */
+  --md-primary-fg-color--light: #4e5bb8;
+  --md-primary-fg-color--dark: #1e2658;
+  --md-accent-fg-color: #00bcd4; /* cyan */
 }
 
-/* Hero section styling for the homepage */
-.md-typeset .hero {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 2rem;
-  align-items: center;
-  padding: 2.5rem 0 1rem;
-}
+/* Minimal rhythm & typography */
+.md-typeset h1 { font-weight: 700; letter-spacing: -0.02em; }
+.md-typeset h2 { letter-spacing: -0.01em; }
+.md-typeset p { line-height: 1.75; }
 
-.md-typeset .hero h1 {
-  font-size: 2.6rem;
-  line-height: 1.1;
-  margin: 0 0 0.75rem;
-}
+/* Minimal buttons: reduce noise */
+.md-button { box-shadow: none; border-radius: 8px; }
+.md-button.md-button--primary { box-shadow: none; }
 
-.md-typeset .hero p.lead {
-  font-size: 1.15rem;
-  color: var(--md-default-fg-color--light);
-  margin-bottom: 1rem;
-}
+/* Compact sections */
+.md-content__inner { max-width: 860px; }
 
-.md-typeset .hero .cta {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
+/* Reduce nav chrome */
+.md-header { backdrop-filter: saturate(120%) blur(6px); }
+.md-header__inner { border-bottom: 1px solid color-mix(in oklab, var(--md-default-fg-color), transparent 85%); }
 
-.md-button.md-button--primary {
-  box-shadow: 0 4px 12px rgb(0 188 212 / 25%);
-}
-
-/* Card grid for value props */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.card {
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 10px;
-  padding: 1rem 1rem 0.75rem;
-  background: var(--md-default-bg-color);
-}
-
-.card h3 {
-  margin-top: 0.5rem;
-}
-
-/* Responsive tweaks */
-@media (max-width: 900px) {
-  .md-typeset .hero {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-  .grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* Footnotes and code emphasize */
+code, .md-typeset code { border-radius: 6px; }

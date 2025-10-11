@@ -3,9 +3,7 @@
 Your new learning space for AI — from first neuron to production‑ready intuition. Clear mental models, runnable code, and elegant visuals.
 
 [Get started →](getting-started.md){ .md-button .md-button--primary }
-[See premium guides →](guides.md){ .md-button }
-[Star on GitHub](https://github.com/Pchambet/wtf-is-deep-learning){ .md-button }
-[Open MNIST in Colab](https://colab.research.google.com/github/Pchambet/mnist-case-study/blob/main/mnist.ipynb){ .md-button }
+[See premium guides](guides.md)
 
 ---
 
@@ -29,4 +27,4 @@ Your new learning space for AI — from first neuron to production‑ready intui
 - Guide 2 — MLP on MNIST (from pixels to predictions)
 - Guide 3 — CNN on MNIST (from pixels to patterns)
 
-[See all guides →](guides.md){ .md-button }
+[See all guides](guides.md)
