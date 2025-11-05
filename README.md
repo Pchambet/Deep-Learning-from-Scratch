@@ -1,107 +1,154 @@
 <p align="center">
-  <img src="banner.png" alt="Deep Learning Journey — by Pierre Chambet" width="800">
+  <img src="banner.png" alt="Deep Learning from Scratch — by Pierre Chambet" width="800">
 </p>
 
-<h1 align="center">Deep Learning Journey</h1>
+<h1 align="center">Deep Learning from Scratch</h1>
 <p align="center">
-  From neuron to CNN, built and explained from scratch.<br>
+  From first principles to real images — one neuron, one layer, one insight at a time.<br>
   <a href="https://www.linkedin.com/in/pierre-chambet-289a5b220/">LinkedIn</a> • 
   <a href="https://github.com/Pchambet">GitHub</a>
 </p>
 
 ---
 
-> “Each week, I take one Deep Learning concept and rebuild it from the ground up — math, intuition, and code — until it makes sense.”
-
-I’m Pierre, a data & deep learning student-engineer who wanted to **understand, not just use** AI.  
-This repository is my open notebook — a transparent journey from the simplest neuron to full convolutional networks,  
-where each step is documented, coded, and shared.
-
-This is not a bootcamp recap or a course copy.  
-It’s **a reconstruction of Deep Learning from first principles**, in the voice of someone who learns by building.
+> “Don’t just run `.fit()`. Build the thing, understand it, and then trust it.”
 
 ---
 
-## Why This Project Exists
+## 👋 About This Project
 
-Because I was tired of calling `.fit()` without knowing what really happened underneath.  
-I wanted to **connect the dots** between calculus, code, and intuition — to *see* backpropagation unfold, to *feel* why activations matter, and to *believe* in the math driving it all.
+I’m **Pierre Chambet**, a data & deep learning student-engineer who decided to rebuild Deep Learning from scratch —  
+not by copying frameworks, but by *understanding every equation, line, and gradient*.
 
-So I built my own curriculum — from scratch, for real.
+This repository is my **learning-in-public laboratory**.  
+It documents the full path from a **hand-coded neuron** in NumPy to a **convolutional network** on MNIST —  
+all explained, derived, and visualized with care.
 
-> This project is both a **learning series** and a **public notebook**.  
-> Each guide is a self-contained step of the journey, both theoretical and practical.
-
----
-
-## The Series Structure
-
-| Step | Theme | Notebook(s) | Description |
-|:----:|:------|:-------------|:-------------|
-| 0 | **Before You Start** | [`read_this_before_and_everyday.ipynb`](read_this_before_and_everyday.ipynb) | How this journey is structured and how to get the most out of it. |
-| 1 | **Neuron & Activation** | [`theory_00.ipynb`](theory_00.ipynb) • [`practice_00.ipynb`](practice_00.ipynb) | What is a neuron? Linear model, sigmoid, gradient derivation, first forward/backward propagation. |
-| 2 | **From Math to Code** | [`guide_01_companion.ipynb`](guide_01_companion.ipynb) • [`practice_01.ipynb`](practice_01.ipynb) | Full implementation of a simple neural net. Logic, equations, and NumPy code converge. |
-| 3 | **Deep Networks** | [`theory_02.ipynb`](theory_02.ipynb) • [`practice_02.ipynb`](practice_02.ipynb) • [`practice_03.ipynb`](practice_03.ipynb) | Generalization to multiple layers. Matrix calculus for full backpropagation. |
-| 4 | **From Pixels to Predictions (MNIST)** | [`mnist.ipynb`](mnist.ipynb) | Apply our from-scratch model to MNIST — preprocessing, training, and error analysis. |
-| 5 | **Seeing with CNNs** | [`CNN.ipynb`](CNN.ipynb) | Move from flattened pixels to structured images. Learn locality, parameter sharing, and invariance. |
-| 6 | **Meta Reflection** | [`main.pdf`](main.pdf) | The full story: lessons learned, synthesis, and philosophy behind the series. |
+It’s both a **portfolio of understanding** and a **teaching resource**:  
+math → code → intuition → result.
 
 ---
 
-## How to Navigate
+## 🧭 Project Architecture
 
-1. **Start from Step 0** — it gives you the mindset and the rules of the game.  
-2. **Alternate between theory and practice** — each concept is followed by its live implementation.  
-3. **Read, code, question.** Don’t skip the “why”.  
-4. **Check the PDF guides** for the narrative explanations.  
-5. **Compare the models** (MLP vs CNN) — that’s where understanding becomes insight.
+| Layer | Content | Purpose |
+|--------|----------|----------|
+| **PDF Guides** | `main_capstone.pdf`, `mnist_guide.pdf`, `cnn_guide.pdf` | Theoretical backbone and narrative |
+| **Notebooks (01–12)** | Full implementations, from neuron → CNN | Code + visual demonstrations |
+| **LinkedIn Series** | Weekly public lessons | Outreach, credibility, reflection |
 
-> Every notebook stands on its own, but all together, they form one continuous arc —  
-> from *mathematical curiosity* to *computational mastery.*
-
----
-
-## LinkedIn Series
-
-This journey is also being shared as a public learning series on LinkedIn.  
-Each post summarizes a notebook, shares visuals, and reflects on what was learned.
-
-Follow along → [**#DeepLearningJourney**](https://www.linkedin.com/in/pierre-chambet-289a5b220/)
-
-| Episode | Title | Notebook Link |
-|:--------|:-------|:---------------|
-| 1 | *What’s really happening inside a neuron?* | [`theory_00.ipynb`](theory_00.ipynb) |
-| 2 | *From math to code: my first neural net from scratch* | [`practice_01.ipynb`](practice_01.ipynb) |
-| 3 | *From one neuron to an entire brain* | [`practice_02.ipynb`](practice_02.ipynb) |
-| 4 | *Can a network see? Understanding MNIST* | [`mnist.ipynb`](mnist.ipynb) |
-| 5 | *When the network starts to see shapes — CNNs* | [`CNN.ipynb`](CNN.ipynb) |
+> The PDFs tell the *why*, the notebooks show the *how*,  
+> and the posts share the *journey*.
 
 ---
 
-## Tech Stack
+## 🧩 Notebook Index (Chronological Path)
 
-- **Language:** Python 3 + NumPy / PyTorch / TensorFlow  
-- **Environment:** Jupyter Notebooks  
-- **Math:** Linear Algebra, Calculus, Optimization  
-- **Visualization:** Matplotlib, Seaborn  
+| # | Notebook | Focus | Output |
+|:-:|-----------|--------|---------|
+| 01 | **Single Neuron** | Linear model, sigmoid activation | Decision boundary |
+| 02 | **Log-Loss & Metrics** | Binary cross-entropy, clipping, accuracy | Loss curve |
+| 03 | **Gradients by Hand** | ∂L/∂w and ∂L/∂b derivation | Gradient sanity check |
+| 04 | **Training Loop** | Forward → loss → backward → update | Accuracy over time |
+| 05 | **Image Pipeline** | Load & normalize data (HDF5 or MNIST) | Sample grid |
+| 06 | **From Scratch on Images** | Apply hand-built loop to real pixels | Training curve |
+| 07 | **Two-Layer Gradients** | Derive and visualize 2-layer backprop | Equations & schema |
+| 08 | **Two-Layer Network** | Implement full 2-layer NN | Non-linear boundary |
+| 09 | **Backprop Any Depth** | General L-layer backprop (looped) | Gradient flow |
+| 10 | **Decision Boundaries** | Moons / Circles / Blobs | Boundary comparison |
+| 11 | **MNIST MLP Baseline** | Dense network + error analysis | Confusion matrix |
+| 12 | **MNIST CNN Baseline** | Convolutional net + feature maps | Learned filters |
 
 ---
 
-## Philosophy
+## 📘 Guides (Theory PDFs)
+
+| File | Theme | Role |
+|------|--------|------|
+| `main_capstone.pdf` | **Fundamentals & Training Logic** | The full story — neurons, gradients, learning loop |
+| `mnist_guide.pdf` | **Dense Networks on MNIST** | How to move from vectors to real handwritten digits |
+| `cnn_guide.pdf` | **Understanding Convolutions** | Why spatial structure changes everything |
+
+> These PDFs are not static papers — they mirror the notebooks and serve as theoretical anchors.
+
+---
+
+## ⚙️ Quickstart
+
+```bash
+git clone https://github.com/Pchambet/deep-learning-from-scratch.git
+cd deep-learning-from-scratch
+python -m venv .venv && source .venv/bin/activate
+pip install -r env/requirements.txt
+jupyter lab notebooks/01_single_neuron.ipynb
+```
+
+---
+
+## 🧱 Repository Structure
+
+```
+deep-learning-from-scratch/
+├── notebooks/           # 01–12 notebooks (chronological learning path)
+├── pdf/                 # main_capstone.pdf, mnist_guide.pdf, cnn_guide.pdf
+├── src/                 # helper code (e.g., utilities.py)
+├── assets/
+│   ├── figures/         # exported plots (decision boundaries, confusion matrices)
+│   └── banners/         # repo and LinkedIn visuals
+├── env/                 # requirements and environment files
+├── README.md
+└── LICENSE
+```
+
+---
+
+## 📢 LinkedIn Series — #DeepLearningJourney
+
+Every notebook becomes a short, visual lesson shared on [**LinkedIn**](https://www.linkedin.com/in/pierre-chambet-289a5b220/).  
+Each post includes 1 idea, 1 plot, and 1 link to the corresponding notebook.
+
+| Episode | Title | Notebook |
+|:--------|:-------|:----------|
+| 1 | *I built a neuron from scratch* | [`01_single_neuron.ipynb`](notebooks/01_single_neuron.ipynb) |
+| 2 | *Log-loss explained in 60 seconds* | [`02_logloss_and_metrics.ipynb`](notebooks/02_logloss_and_metrics.ipynb) |
+| 3 | *How backprop really works* | [`03_gradients_single_neuron.ipynb`](notebooks/03_gradients_single_neuron.ipynb) |
+| 4 | *A training loop that actually learns* | [`04_training_loop_from_scratch.ipynb`](notebooks/04_training_loop_from_scratch.ipynb) |
+| 5 | *From vectors to images — MNIST* | [`11_mnist_mlp_baseline.ipynb`](notebooks/11_mnist_mlp_baseline.ipynb) |
+| 6 | *When the network starts to see — CNNs* | [`12_mnist_cnn_baseline.ipynb`](notebooks/12_mnist_cnn_baseline.ipynb) |
+| 7 | *The big picture: from neuron to CNN* | [`pdf/main_capstone.pdf`](pdf/main_capstone.pdf) |
+
+---
+
+## 🧠 Philosophy
 
 > “Learning isn’t remembering — it’s rebuilding.”
 
-I don’t aim to be fast.  
-I aim to be *clear*.  
-Every equation is derived. Every plot is explained.  
-This is learning **by reconstruction** — one concept, one notebook, one insight at a time.
+No shortcuts, no black boxes.  
+Every weight, bias, and gradient is traced.  
+This is **real deep learning** — in both name and process.
 
 ---
 
-## Contribute / Connect
+## 🧾 For Recruiters
 
-If you find an error, open an issue or PR.  
-If you’re also on a learning journey, tag me on LinkedIn — I’d love to see your version.
+**In five minutes**, this repo tells you that I:
+- Understand the math behind neural networks.  
+- Can implement and debug deep learning models end-to-end.  
+- Communicate complex ideas clearly and visually.  
+- Learn independently, structure work, and deliver clean results.
+
+Start with:
+- `01_single_neuron.ipynb` (clarity)
+- `04_training_loop_from_scratch.ipynb` (method)
+- `11_mnist_mlp_baseline.ipynb` (application)
+- `12_mnist_cnn_baseline.ipynb` (maturity)
+
+---
+
+## 🤝 Contribute / Connect
+
+If you find an error or idea worth exploring, open an issue or PR.  
+If you’re learning in public too, tag me — let’s connect.
 
 <p align="center">
   <a href="https://www.linkedin.com/in/pierre-chambet-289a5b220/">
@@ -115,6 +162,6 @@ If you’re also on a learning journey, tag me on LinkedIn — I’d love to see
 ---
 
 <p align="center"><i>
-Deep Learning Journey — built with patience, mathematics, and curiosity.<br>
+Deep Learning from Scratch — built with patience, mathematics, and curiosity.<br>
 © 2025 Pierre Chambet. All rights reserved.
 </i></p>
