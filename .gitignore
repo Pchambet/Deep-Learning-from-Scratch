@@ -15,3 +15,21 @@ env/
 
 # Fichiers Jupyter
 .ipynb_checkpoints
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Data
+data/*.hdf5
+
+# Figures
+assets/figures/*.png
