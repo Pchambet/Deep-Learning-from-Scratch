@@ -1,7 +1,7 @@
 # Deep Learning, From First Principles.
 
 <p align="center">
-  <img src="assets/README_Banner.png" alt="Deep Learning from Scratch Banner" width="100%"/>
+  <img src="banner.png" alt="Deep Learning from Scratch Banner" width="100%"/>
 </p>
 
 > As an engineering student, I wasn't satisfied with just calling `.fit()`.
