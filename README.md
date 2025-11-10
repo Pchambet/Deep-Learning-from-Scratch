@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="banner.png" alt="Deep Learning from Scratch — by Pierre Chambet" width="800">
+  <img src="assets/banners/banner.png" alt="Deep Learning from Scratch — by Pierre Chambet" width="800">
 </p>
 
 <h1 align="center">Deep Learning from Scratch</h1>
