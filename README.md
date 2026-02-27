@@ -111,13 +111,15 @@ jupyter lab notebooks/birth_of_a_neuron.ipynb
 ```
 Deep-Learning-from-Scratch/
 ├── notebooks/           # Course — birth_of_a_neuron, 01, 02, 04, 07–09, 11, 12
-├── pdf/                # Guides (Ep. I–III, main, mnist, CNN)
-├── lab/                # Lab — case studies
-│   ├── mnist/          # MNIST MLP (notebook + train_mlp.py)
-│   └── cnn/            # CNN (notebook + train_cnn.py)
-├── src/                # utilities.py (load_data for HDF5)
-├── data/               # trainset.hdf5, testset.hdf5 (cats vs dogs)
-├── assets/             # Figures, banners
+├── pdf/                 # Built guides (Ep. I–III, main, mnist, CNN)
+├── latex/               # LaTeX sources — main, mnist, cnn (edit here, build → pdf/)
+├── lab/                 # Lab — case studies
+│   ├── mnist/           # MNIST MLP (notebook + train_mlp.py)
+│   └── cnn/             # CNN (notebook + train_cnn.py)
+├── src/                 # utilities.py (load_data for HDF5)
+├── data/                # trainset.hdf5, testset.hdf5 (cats vs dogs)
+├── assets/              # Figures, banners, photos
+├── Makefile             # make latex → build all PDFs
 ├── requirements.txt
 └── README.md
 ```

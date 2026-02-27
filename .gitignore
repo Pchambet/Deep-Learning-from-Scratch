@@ -26,3 +26,12 @@ assets/figures/*.png
 
 # Lab outputs
 lab/*/outputs/
+
+# LaTeX build artifacts
+latex/**/*.aux
+latex/**/*.log
+latex/**/*.fls
+latex/**/*.fdb_latexmk
+latex/**/*.out
+latex/**/out/
+latex/**/dist/
