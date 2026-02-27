@@ -33,43 +33,48 @@ math → code → intuition → result.
 
 | Layer | Content | Purpose |
 |--------|----------|----------|
-| **PDF Guides** | `main_capstone.pdf`, `mnist_guide.pdf`, `cnn_guide.pdf` | Theoretical backbone and narrative |
-| **Notebooks (01–12)** | Full implementations, from neuron → CNN | Code + visual demonstrations |
-| **LinkedIn Series** | Weekly public lessons | Outreach, credibility, reflection |
+| **LinkedIn Series (3 épisodes)** | `Theory of a Neuron`, `The Art of Descent`, `Birth of a Neuron` | Cours PDF + Colab — théorie → gradients → code |
+| **Notebooks** | Parcours de neurone à CNN (01, 02, 04, 07–09, 11, 12, birth_of_a_neuron) | Implémentations et démos |
+| **Guides additionnels** | `main.pdf`, `mnist.pdf`, `CNN.pdf` | Théorie avancée, MNIST, convolutions |
 
-> The PDFs tell the *why*, the notebooks show the *how*,  
-> and the posts share the *journey*.
+> Les PDFs LinkedIn (3 épisodes) = le *pourquoi* et le *comment* pensée.  
+> Les notebooks = le *comment* codé. Les posts partagent le *parcours*.
 
 ---
 
 ## 🧩 Notebook Index (Chronological Path)
 
-| # | Notebook | Focus | Output |
-|:-:|-----------|--------|---------|
-| 01 | **Single Neuron** | Linear model, sigmoid activation | Decision boundary |
-| 02 | **Log-Loss & Metrics** | Binary cross-entropy, clipping, accuracy | Loss curve |
-| 03 | **Gradients by Hand** | ∂L/∂w and ∂L/∂b derivation | Gradient sanity check |
-| 04 | **Training Loop** | Forward → loss → backward → update | Accuracy over time |
-| 05 | **Image Pipeline** | Load & normalize data (HDF5 or MNIST) | Sample grid |
-| 06 | **From Scratch on Images** | Apply hand-built loop to real pixels | Training curve |
-| 07 | **Two-Layer Gradients** | Derive and visualize 2-layer backprop | Equations & schema |
-| 08 | **Two-Layer Network** | Implement full 2-layer NN | Non-linear boundary |
-| 09 | **Backprop Any Depth** | General L-layer backprop (looped) | Gradient flow |
-| 10 | **Decision Boundaries** | Moons / Circles / Blobs | Boundary comparison |
-| 11 | **MNIST MLP Baseline** | Dense network + error analysis | Confusion matrix |
-| 12 | **MNIST CNN Baseline** | Convolutional net + feature maps | Learned filters |
+| # | Notebook | Focus | Lié à |
+|:-:|-----------|--------|-------|
+| — | **birth_of_a_neuron** | Neurone codé à la main (toxic plants) | Ep. III LinkedIn · Colab |
+| 01 | **Single Neuron** | Linear model, sigmoid activation | Thème Ep. I |
+| 02 | **Gradients Single Neuron** | ∂L/∂w et ∂L/∂b, chain rule | Ep. II LinkedIn |
+| 04 | **Training Loop** | Forward → loss → backward → update (cats vs dogs) | — |
+| 07 | **Two-Layer Gradients** | Backprop 2 couches, théorie | — |
+| 08 | **Two-Layer Network** | Réseau 2 couches sur images | — |
+| 09 | **Backprop Any Depth** | Backprop L couches | — |
+| 11 | **MNIST MLP Baseline** | Dense network, MNIST | — |
+| 12 | **MNIST CNN Baseline** | CNN, feature maps | — |
 
 ---
 
 ## 📘 Guides (Theory PDFs)
 
-| File | Theme | Role |
-|------|--------|------|
-| `main_capstone.pdf` | **Fundamentals & Training Logic** | The full story — neurons, gradients, learning loop |
-| `mnist_guide.pdf` | **Dense Networks on MNIST** | How to move from vectors to real handwritten digits |
-| `cnn_guide.pdf` | **Understanding Convolutions** | Why spatial structure changes everything |
+### Série LinkedIn — 3 épisodes (théorie → gradients → code)
 
-> These PDFs are not static papers — they mirror the notebooks and serve as theoretical anchors.
+| Épisode | File | Theme |
+|:-------:|------|--------|
+| I | [`Theory of a Neuron.pdf`](pdf/Theory%20of%20a%20Neuron.pdf) | Neurone : fonction linéaire, sigmoid, log-loss |
+| II | [`The Art of Descent.pdf`](pdf/The%20Art%20of%20Descent.pdf) | Chain rule, gradients ∂ℓ/∂w, ∂ℓ/∂b |
+| III | [`Birth of a Neuron.pdf`](pdf/Birth%20of%20a%20Neuron.pdf) | Neurone codé à la main, toxic plants |
+
+### Guides additionnels
+
+| File | Theme |
+|------|--------|
+| `main.pdf` | Synthèse globale — neurones à boucle d’apprentissage |
+| `mnist.pdf` | Réseaux denses sur MNIST |
+| `CNN.pdf` | Comprendre les convolutions |
 
 ---
 
@@ -78,10 +83,12 @@ math → code → intuition → result.
 ```bash
 git clone https://github.com/Pchambet/deep-learning-from-scratch.git
 cd deep-learning-from-scratch
-python -m venv .venv && source .venv/bin/activate
-pip install -r env/requirements.txt
-jupyter lab notebooks/01_single_neuron.ipynb
+python -m venv .venv && source .venv/bin/activate  # ou .venv\Scripts\activate sur Windows
+pip install -r requirements.txt
+jupyter lab notebooks/birth_of_a_neuron.ipynb
 ```
+
+Ou exécuter directement sur [Google Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) (aucune install).
 
 ---
 
@@ -89,33 +96,30 @@ jupyter lab notebooks/01_single_neuron.ipynb
 
 ```
 deep-learning-from-scratch/
-├── notebooks/           # 01–12 notebooks (chronological learning path)
-├── pdf/                 # main_capstone.pdf, mnist_guide.pdf, cnn_guide.pdf
-├── src/                 # helper code (e.g., utilities.py)
-├── assets/
-│   ├── figures/         # exported plots (decision boundaries, confusion matrices)
-│   └── banners/         # repo and LinkedIn visuals
-├── env/                 # requirements and environment files
+├── notebooks/           # birth_of_a_neuron, 01, 02, 04, 07–09, 11, 12
+├── pdf/                 # Theory of a Neuron, The Art of Descent, Birth of a Neuron, main, mnist, CNN
+├── src/                 # utilities.py (load_data pour HDF5)
+├── data/                # trainset.hdf5, testset.hdf5 (cats vs dogs)
+├── assets/              # figures, banners, photos_git
+├── requirements.txt
 ├── README.md
 └── LICENSE
 ```
 
 ---
 
-## 📢 LinkedIn Series — #DeepLearningJourney
+## 📢 LinkedIn Series — Deep Learning From Scratch (3 épisodes)
 
-Every notebook becomes a short, visual lesson shared on [**LinkedIn**](https://www.linkedin.com/in/pierre-chambet-289a5b220/).  
-Each post includes 1 idea, 1 plot, and 1 link to the corresponding notebook.
+Série de cours PDF partagés sur [**LinkedIn**](https://www.linkedin.com/in/pierre-chambet-289a5b220/) — théorie → gradients → code.
 
-| Episode | Title | Notebook |
-|:--------|:-------|:----------|
-| 1 | *I built a neuron from scratch* | [`01_single_neuron.ipynb`](notebooks/01_single_neuron.ipynb) |
-| 2 | *Log-loss explained in 60 seconds* | [`02_logloss_and_metrics.ipynb`](notebooks/02_logloss_and_metrics.ipynb) |
-| 3 | *How backprop really works* | [`03_gradients_single_neuron.ipynb`](notebooks/03_gradients_single_neuron.ipynb) |
-| 4 | *A training loop that actually learns* | [`04_training_loop_from_scratch.ipynb`](notebooks/04_training_loop_from_scratch.ipynb) |
-| 5 | *From vectors to images — MNIST* | [`11_mnist_mlp_baseline.ipynb`](notebooks/11_mnist_mlp_baseline.ipynb) |
-| 6 | *When the network starts to see — CNNs* | [`12_mnist_cnn_baseline.ipynb`](notebooks/12_mnist_cnn_baseline.ipynb) |
-| 7 | *The big picture: from neuron to CNN* | [`pdf/main_capstone.pdf`](pdf/main_capstone.pdf) |
+| Épisode | Titre | Contenu | Lien |
+|:-------:|-------|---------|------|
+| **I** | *Theory of a Neuron* | PDF 10 p. — linear function, sigmoid, log-loss | [PDF](pdf/Theory%20of%20a%20Neuron.pdf) |
+| **II** | *The Art of Descent* | PDF 12 p. — chain rule, ∂ℓ/∂w, ∂ℓ/∂b | [PDF](pdf/The%20Art%20of%20Descent.pdf) · [Notebook](notebooks/02_gradients_single_neuron.ipynb) |
+| **III** | *Birth of a Neuron* | PDF 18 p. + Colab — neurone codé à la main | [PDF](pdf/Birth%20of%20a%20Neuron.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) |
+
+> Comment **NEURON** (Ep. I), **GRADIENT** (Ep. II) ou **BIRTH** (Ep. III) sur les posts LinkedIn pour recevoir le PDF en DM.  
+> #DeepLearningJourney
 
 ---
 
@@ -138,10 +142,10 @@ This is **real deep learning** — in both name and process.
 - Learn independently, structure work, and deliver clean results.
 
 Start with:
-- `01_single_neuron.ipynb` (clarity)
-- `04_training_loop_from_scratch.ipynb` (method)
-- `11_mnist_mlp_baseline.ipynb` (application)
-- `12_mnist_cnn_baseline.ipynb` (maturity)
+- [`birth_of_a_neuron.ipynb`](notebooks/birth_of_a_neuron.ipynb) (clarté — neurone de A à Z)
+- [`02_gradients_single_neuron.ipynb`](notebooks/02_gradients_single_neuron.ipynb) (théorie des gradients)
+- [`11_mnist_mlp_baseline.ipynb`](notebooks/11_mnist_mlp_baseline.ipynb) (application)
+- [`12_mnist_cnn_baseline.ipynb`](notebooks/12_mnist_cnn_baseline.ipynb) (maturité)
 
 ---
 
