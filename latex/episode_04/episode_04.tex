@@ -1,0 +1,540 @@
+% Episode IV — All Eyes on You (Cat vs Dog)
+% Calibré sur la structure et le style de l'Episode III — Birth of a Neuron
+%
+% Si TeX Live complet : [most]{tcolorbox}, microtype, tabularx+ragged2e
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tcolorbox}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{fancyvrb}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usetikzlibrary{arrows.meta, positioning}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+% --- Code style (minimal, aligné Ep III) ---
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true
+}
+\lstset{style=mystyle}
+
+% --- Chemins images ---
+\graphicspath{{../../assets/photos_git/}}
+
+% ---------------------------------------------------------------
+%                      TITLE PAGE
+% ---------------------------------------------------------------
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vspace*{2.2cm}
+
+    {\Large \textbf{DEEP LEARNING FROM SCRATCH}}\\[0.4em]
+    A Guide for Self-Learners\\[2.5em]
+
+    {\Huge \bfseries Episode IV}\\[0.4em]
+    {\LARGE \textit{All Eyes on You}}\\[2em]
+
+    \vspace{2cm}
+
+   \begin{tcolorbox}[colback=black!3!white, colframe=black!20!white, width=0.8\textwidth, sharp corners, boxrule=0.4pt]
+    \centering
+    \itshape
+
+    {\Large Speed isn't the enemy, confusion is.}\\[1em]
+
+    \textbf{Why this mini-guide?}\\[0.3em]
+    We open its eyes.\\
+    Until now, the neuron knew only numbers. Now we give it sight.\\
+    For the first time, it will see — and yes, it will stumble.\\
+    But here, we awaken that power.
+    \end{tcolorbox}
+    \vspace{1.5cm}
+    \begin{center}
+    \itshape
+        {\Large \textit{"The most difficult thing is the decision to act; the rest is merely tenacity."}}\\
+        \vspace{0.2em}
+        {\large -- Amelia Earhart}
+    \end{center}
+
+
+    \vfill
+
+    {\large \textbf{Pierre Chambet}}\\[0.3em]
+    {\small February 2026}\\[1em]
+    \rule{0.8\textwidth}{0.4pt}\\[0.4em]
+    {\small Part of the \textit{Deep Learning From Scratch} series — an independent reconstruction of AI.}
+
+\end{titlepage}
+
+
+\begin{tcolorbox}[colback=white, colframe=black!80, boxrule=0.8pt,
+  width=\textwidth, before skip=10pt, after skip=10pt, halign=center,
+  fontupper=\sffamily\large]
+
+\href{https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/04_training_loop_from_scratch.ipynb}{
+  \textbf{\large Launch All Eyes on You here on Google Colab}
+}
+
+\vspace{0.5em}
+
+{\color{gray!80!black}\small%
+\textit{One click. Your turn to run it.}
+}
+\end{tcolorbox}
+
+\section*{Here, You Test Our Neuron on Real Images}
+
+\subsection*{From Plants to Pixels}
+
+In Episode III, we built a neuron that classified plants using two features: leaf length and leaf width.  
+Now we ask: \textbf{can the same neuron tackle real images?}
+
+We will use a small dataset of photos — \textbf{cats} and \textbf{dogs} — and see if the neuron can learn to tell them apart.  
+Same equations. Same learning loop. The only change: each input has \textbf{4096 numbers} instead of 2.
+
+\begin{tcolorbox}[colback=gray!5, colframe=gray!60!black]
+\textbf{You don't need new theory.}  
+You already know how the neuron works.  
+What changes is the \emph{shape} of the input — and how we prepare it.
+\end{tcolorbox}
+
+\subsection*{Theory in Short (Reminder)}
+
+Nothing changes in the neuron itself.  
+We still have:
+\begin{enumerate}
+    \item \textbf{Model} — linear transformation $Z = XW + b$, then sigmoid.
+    \item \textbf{Loss} — log-loss measures how wrong the predictions are.
+    \item \textbf{Gradients} — derivatives tell us how to adjust $W$ and $b$.
+    \item \textbf{Update} — gradient descent: $W \leftarrow W - \alpha \, dW$, $b \leftarrow b - \alpha \, db$.
+\end{enumerate}
+
+\begin{quote}
+The neuron does not care whether $X$ has 2 columns or 4096.  
+It applies the same math. Our job is to turn a photo into a vector of numbers.
+\end{quote}
+
+
+\begin{tcolorbox}[colback=gray!3, colframe=black!40, title=Let's test our neuron on images, fonttitle=\bfseries, arc=2mm]
+We will load cats and dogs, flatten each image into 4096 pixels, normalize them, and feed them to the neuron.  
+Along the way, we will fix a numerical bug, tune hyperparameters, and discover overfitting.  
+\textbf{No magic — just the same loop, scaled up.}
+\end{tcolorbox}
+
+\vspace{0.7em}
+
+\begin{center}
+\textit{First question every data scientist asks: \textbf{what is my dataset?}}
+
+Because behind every dataset, there is a goal.  
+Here: can a single neuron learn to distinguish cats from dogs?
+\end{center}
+
+\vspace{0.7em}
+
+\subsection*{The Dataset — Cats and Dogs}
+
+\vspace{0.5em}
+
+We use two separate datasets:
+\begin{itemize}
+    \item One for \textbf{training} — the neuron learns from it.
+    \item One for \textbf{testing} — we evaluate on data the neuron has never seen.
+\end{itemize}
+
+\vspace{0.5em}
+
+\noindent Why two?
+
+\begin{tcolorbox}[colback=white!98!gray, colframe=gray!30!black, arc=1mm]
+If we trained and tested on the same data, the neuron might \emph{memorize} answers without learning to generalize.  
+By testing on \textbf{unseen images}, we check if it truly \textbf{understands} the task.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\noindent It is like preparing for an exam: practicing helps, but the real test is solving \textbf{new problems}.
+
+\vspace{1em}
+
+\subsection*{Step 1: Load and Inspect}
+
+\begin{tcolorbox}[colback=gray!3, colframe=black!40, title=Step 1: Load the Neuron and the Data, fonttitle=\bfseries, arc=2mm]
+We reuse the code from Episode III and load the cat/dog dataset.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\noindent In Colab, you'll import the neuron from Episode III and load the data. One line:
+
+\begin{lstlisting}[language=Python]
+X_train, y_train, X_test, y_test = load_data()
+\end{lstlisting}
+
+\vspace{0.5em}
+
+\noindent To inspect what we have — \texttt{print(X\_train.shape)} — and we see:
+
+\begin{tcolorbox}[colback=gray!5, colframe=black!40, arc=1mm, title=Training Data Overview, fonttitle=\bfseries]
+    \begin{itemize}
+        \item \texttt{X\_train shape}: \texttt{(1000, 64, 64)} — 1000 images, each 64×64 pixels.
+        \item \texttt{y\_train shape}: \texttt{(1000, 1)} — one label per image.
+        \item Labels: \texttt{0} = cat, \texttt{1} = dog. Balanced: 500 cats, 500 dogs.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\noindent Same idea for the test set:
+
+\begin{tcolorbox}[colback=gray!5, colframe=black!40, arc=1mm, title=Test Data Overview, fonttitle=\bfseries]
+    \begin{itemize}
+        \item \texttt{X\_test shape}: \texttt{(200, 64, 64)} — 200 unseen images.
+        \item \texttt{y\_test shape}: \texttt{(200, 1)}.
+        \item Balanced: 100 cats, 100 dogs.
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{dogs}
+    \caption{Sample images from the dataset.}
+\end{figure}
+
+\begin{tcolorbox}[colback=white!97!gray, colframe=black!20, arc=1mm]
+\textbf{Pro tip:} Always inspect the shapes before modeling.  
+You want to know exactly what you are feeding to the neuron.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\noindent The full setup — imports, paths — is in Colab. Nothing to worry about.
+
+\vspace{1em}
+
+\section*{How Do We Feed a Photo to the Neuron?}
+
+\vspace{0.5em}
+
+\noindent Now: how do we actually give a photo to the neuron?
+
+\noindent\textbf{The answer is simple.}  
+We treat each pixel as a separate input.  
+A 64×64 image has $64 \times 64 = \boldsymbol{4096}$ pixels.
+
+\vspace{0.5em}
+
+We scan the image row by row — left to right, top to bottom — and flatten it into a vector:
+\[
+\boldsymbol{X = (x_1, x_2, \ldots, x_{4096})}
+\]
+
+Each $x_i$ is the intensity of one pixel.
+
+\vspace{1em}
+
+\begin{tcolorbox}[colback=white!98!gray, colframe=gray!30!black, arc=1mm]
+\textbf{A photo becomes a vector of numbers.}  
+From there, the neuron applies the same linear model as before.
+\end{tcolorbox}
+
+\vspace{1em}
+
+\begin{center}
+    \fbox{\large \textbf{The neuron doesn't see images — it sees numbers.}}
+\end{center}
+
+\vspace{1em}
+
+\section*{The Pipeline: Four Steps}
+
+\vspace{0.5em}
+
+How do we go from raw pixels to a prediction?
+
+\begin{enumerate}
+    \item \textbf{Normalize} — rescale each pixel from $[0, 255]$ to $[0, 1]$ (divide by 255 or by max).
+    \item \textbf{Flatten} — turn each 64×64 image into a 4096-dimensional vector.
+    \item \textbf{Train} — same loop as Episode III: model $\to$ loss $\to$ gradients $\to$ update.
+    \item \textbf{Evaluate} — test on unseen data to check generalization.
+\end{enumerate}
+
+\begin{tcolorbox}[colback=white!98!gray, colframe=gray!30!black, arc=1mm]
+\textbf{That is the pipeline.}  
+From raw pixels to prediction — four steps.
+\end{tcolorbox}
+
+\vspace{1em}
+
+\section*{Step 2: Normalize and Flatten}
+
+\begin{tcolorbox}[colback=gray!3, colframe=black!40, title=Step 2: Prepare the Input, fonttitle=\bfseries, arc=2mm]
+Before feeding images to the neuron, we flatten and normalize.  
+Two operations, often done together.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\begin{itemize}
+    \item \textbf{Flatten} — each 64×64 image becomes a vector of 4096 values.
+    \item \textbf{Normalize} — scale pixels from $[0, 255]$ to $[0, 1]$.
+\end{itemize}
+
+Why divide by 255? Each pixel is stored on 8 bits: $2^8 = 256$ values, from 0 to 255.  
+We divide by the max value — that way it works for any image format.
+
+\begin{tcolorbox}[colback=white!97!gray, colframe=black!20, arc=1mm]
+\textbf{Why normalize?}  
+If one feature has much larger values than others, the model may over-weight it.  
+Normalization ensures every feature contributes fairly — like balancing the mix in a band.
+\end{tcolorbox}
+
+\begin{center}
+    \fbox{\textbf{We normalize to be fair.}}
+\end{center}
+
+\vspace{1em}
+
+\noindent In code — two lines:
+
+\begin{lstlisting}[language=Python]
+X_train_reshape = X_train.reshape(X_train.shape[0], -1) / X_train.max()
+X_test_reshape = X_test.reshape(X_test.shape[0], -1) / X_test.max()
+\end{lstlisting}
+
+\vspace{0.5em}
+
+\begin{tcolorbox}[colback=gray!5, colframe=black!50, arc=2mm, title=At This Point..., fonttitle=\bfseries]
+Each image is a normalized vector of 4096 values.  
+The neuron can now learn from the data.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=white!97!gray, colframe=gray!15!gray, arc=1mm]
+\textbf{Premium tip:} Use \texttt{-1} in \texttt{reshape} to let NumPy infer the dimension.  
+\texttt{X.shape[0], -1} means ``keep the number of images, flatten the rest.''
+\end{tcolorbox}
+
+\vspace{1em}
+
+\noindent Data ready. Time to train.
+
+\vspace{0.5em}
+
+\section*{Step 3: Train — And Hit a Bug}
+
+\begin{tcolorbox}[colback=gray!3, colframe=black!40, title=Step 3: Run the Training Loop, fonttitle=\bfseries, arc=2mm]
+We feed the reshaped data to the neuron — same \texttt{artificial\_neuron} as in Episode III.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\begin{lstlisting}[language=Python]
+W, b = artificial_neuron(X_train_reshape, y_train, learning_rate=0.1, num_iter=100)
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{error}
+    \caption{The neuron's first attempt at seeing — and it stumbles.}
+\end{figure}
+
+\vspace{0.5em}
+
+\noindent We get:
+\begin{center}
+    \emph{``RuntimeWarning: divide by zero encountered in log''}
+\end{center}
+
+\vspace{0.5em}
+
+\subsection*{What is going wrong?}
+
+The error comes from \texttt{log\_loss}.  
+We compute $\log(A)$ and $\log(1-A)$.  
+$A$ comes from the sigmoid: $A = 1/(1+e^{-Z})$.
+
+\begin{tcolorbox}[colback=white!98!gray, colframe=gray!30!black, arc=1mm]
+\textbf{The exponential grows fast.}  
+For $z = 20$, we have $\exp(-z) \approx 0$, so $A \approx 1$.  
+For $z = -20$, we have $A \approx 0$.  
+And $\log(0)$ is undefined.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\noindent\textbf{Fix:} Add a small constant $\varepsilon$ to avoid $\log(0)$.  
+Standard practice in deep learning.
+
+\begin{lstlisting}[language=Python]
+def log_loss(A, y):
+    m = len(y)
+    epsilon = 1e-15
+    loss = -1/m * np.sum(y * np.log(A + epsilon) 
+                    + (1 - y) * np.log(1 - A + epsilon))
+    return loss
+\end{lstlisting}
+
+\begin{tcolorbox}[colback=white!97!gray, colframe=black!20, arc=1mm]
+\textbf{Pro tip:} Numerical stability matters.  
+Always guard against $\log(0)$, division by zero, and overflow.  
+$\varepsilon = 10^{-15}$ is tiny — it does not change the math, but it prevents crashes.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\noindent Run the corrected loop in Colab and watch the curve stabilize.
+
+\vspace{1em}
+
+\section*{Step 4: Hyperparameters — The Levers We Can Turn}
+
+\begin{tcolorbox}[colback=gray!3, colframe=black!40, title=Step 4: Tune the Learning Process, fonttitle=\bfseries, arc=2mm]
+Once the model runs, we control how it learns via \textbf{hyperparameters}:  
+learning rate, number of iterations, initialization, etc.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+With the fixed \texttt{log\_loss}, training runs — but the curve may be shaky.
+
+\begin{itemize}
+    \item \textbf{Learning rate} — too high $\Rightarrow$ overshoot, instability.  
+    Too low $\Rightarrow$ slow convergence.
+    \item \textbf{Number of iterations (epochs)} — too few $\Rightarrow$ underfitting.  
+    Too many $\Rightarrow$ risk of overfitting.
+\end{itemize}
+
+\begin{tcolorbox}[colback=white!98!gray, colframe=gray!30!black, arc=1mm]
+\textbf{Hyperparameters = the teacher's schedule.}  
+They decide how fast the neuron moves and how long it trains.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\noindent In Colab, we lower the learning rate and rerun. The curve smooths out.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{better}
+    \caption{With a gentler learning rate, the curve smooths out.}
+\end{figure}
+
+\vspace{0.5em}
+
+We can also track both loss and accuracy — and compare training vs.\ test performance. In Colab, we run a loop that plots them side by side. What we see: the curves diverge.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{definitely}
+    \caption{Train climbs. Test lags. The gap tells the story.}
+\end{figure}
+
+\vspace{1em}
+
+\section*{Step 5: Detecting Overfitting}
+
+\begin{tcolorbox}[colback=gray!5, colframe=black!50, title=Step 5: Diagnose the Divergence, fonttitle=\bfseries, arc=2mm]
+The plots reveal a clear pattern:  
+training loss decreases, training accuracy climbs — but test loss stagnates or rises, test accuracy lags.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\noindent Look at the plot above — that gap is the signal. \textbf{Overfitting} means the model performs very well on training data but fails to generalize to new examples.
+
+\begin{tcolorbox}[colback=white!98!gray, colframe=gray!30!black, arc=1mm]
+Like a student who memorizes the exercises without understanding the method —  
+they ace the practice set but struggle on new problems.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+\begin{center}
+    \fbox{\textbf{Warning: if train and test curves diverge, you are likely overfitting.}}
+\end{center}
+
+\vspace{1em}
+
+\section*{How Can We Fix Overfitting?}
+
+Common strategies:
+\begin{enumerate}
+    \item \textbf{More data} — expose the model to greater variety.
+    \item \textbf{Simplify the input} — reduce dimensions, extract better features.
+    \item \textbf{Regularization} — L1, L2, dropout — push weights toward simpler solutions.
+\end{enumerate}
+
+\vspace{0.5em}
+
+But here's the twist: in our case, none of these will dramatically help. The problem isn't just overfitting. Why?
+
+\begin{tcolorbox}[colback=white!98!gray, colframe=gray!30!black, arc=1mm]
+\textbf{Because our model is too simple.}  
+We use a \textbf{single neuron} — a linear classifier.  
+It can only draw one straight line.
+\end{tcolorbox}
+
+\vspace{0.5em}
+
+If the true boundary between cats and dogs is curved, complex, nonlinear —  
+a single neuron is not enough.
+
+\vspace{1em}
+
+\section*{The Limit — and the Next Step}
+
+\vspace{0.5em}
+
+We have pushed our neuron as far as it can go.
+
+It learned. It adjusted. It gave us decent results on the training set.  
+But it hits a wall: one straight line cannot capture the complexity of images.
+
+\begin{tcolorbox}[colback=gray!5, colframe=black!50, title=What do we do?]
+\textbf{We scale up.}  
+We add more neurons. We add more layers.  
+We move from a single-cell brain to a full \textbf{Artificial Neural Network (ANN)}.
+\end{tcolorbox}
+
+\vspace{1em}
+
+\begin{center}
+    \fbox{\Large \textbf{Let's move from a neuron... to a brain.}}
+\end{center}
+
+\vspace{0.5em}
+
+And yes — that means more equations, matrices, and weight updates.  
+But you only need to understand it once.  
+Then you will be free to design your own architectures.
+
+\vspace{1em}
+
+We gave it eyes. It saw. It stumbled. And now we know why — and what comes next.
+
+\vspace{0.5em}
+
+In the next episode, we build our first real neural network.
+
+\end{document}
