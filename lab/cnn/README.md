@@ -1,16 +1,16 @@
 # CNN Case Study
 
-Exploration des Convolutional Neural Networks sur MNIST.
+A focused exploration of Convolutional Neural Networks on MNIST.
 
-## Lancer
+## Run it
 
 ```bash
 python train_cnn.py
 ```
-Artefacts et courbes → `outputs/`.
+Artifacts and curves → `outputs/`.
 
-**Notebook :** `CNN.ipynb`
+**Notebook:** `CNN.ipynb`
 
-## Dépendances
+## Dependencies
 
-Voir `requirements.txt` à la racine. TensorFlow requis.
+See the root `requirements.txt`. TensorFlow required.

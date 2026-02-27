@@ -1,20 +1,20 @@
 # Lab — Wide-Range Ideas Laboratory
 
-Espace d'exploration et d'expérimentation. Pour aller plus loin après le cours.
+A place to explore and experiment. Where the course ends, the real play begins.
 
 ---
 
 ## Case Studies
 
-| Projet | Contenu | Lancer |
-|--------|---------|--------|
-| [**MNIST**](mnist/) | MLP sur chiffres manuscrits — pipeline complet, normalisation, training | [Notebook](mnist/mnist.ipynb) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/lab/mnist/mnist.ipynb) |
-| [**CNN**](cnn/) | Convolutions sur MNIST — filtres, pooling, architecture | [Notebook](cnn/CNN.ipynb) · `make train` / `python train_cnn.py` |
+| Project | What's inside | How to run |
+|---------|---------------|------------|
+| [**MNIST**](mnist/) | MLP on handwritten digits — full pipeline, normalization, training curves | [Notebook](mnist/mnist.ipynb) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/lab/mnist/mnist.ipynb) |
+| [**CNN**](cnn/) | Convolutions on MNIST — filters, pooling, architecture | [Notebook](cnn/CNN.ipynb) · `make train` / `python train_cnn.py` |
 
 ---
 
-## Philosophie
+## Philosophy
 
 > "No shortcuts. No illusions. Just code, clarity, and comprehension."
 
-Le Lab complète le **Cours** (parcours principal). Ici, on explore, on teste, on creuse.
+The Lab extends the **Course**. Here you explore, test, and dig deeper.

@@ -1,29 +1,29 @@
 # MNIST Case Study
 
-MLP sur le dataset MNIST — pipeline complet, de la normalisation au training.
+An MLP on the MNIST dataset — from normalization to training, step by step.
 
-## Lancer
+## Run it
 
-**Notebook :**
+**Notebook:**
 ```bash
 jupyter notebook mnist.ipynb
 ```
-Ou [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/lab/mnist/mnist.ipynb)
+Or [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/lab/mnist/mnist.ipynb)
 
-**Script :**
+**Script:**
 ```bash
 make mlp
 ```
-Sauvegarde dans `outputs/`.
+Outputs are saved to `outputs/`.
 
-## Dépendances
+## Dependencies
 
-Utilisez le `requirements.txt` à la racine du projet, ou :
+Use the root `requirements.txt`, or:
 ```bash
 pip install tensorflow numpy matplotlib
 ```
-Sur Apple Silicon : `tensorflow-macos` + `tensorflow-metal`.
+On Apple Silicon: `tensorflow-macos` + `tensorflow-metal`.
 
 ## Dataset
 
-MNIST est téléchargé automatiquement via `tensorflow.keras.datasets.mnist`.
+MNIST is downloaded automatically via `tensorflow.keras.datasets.mnist`.

@@ -12,69 +12,83 @@
 
 ---
 
-> “Don’t just run `.fit()`. Build the thing, understand it, and then trust it.”
+> “Don't just run `.fit()`. Build the thing, understand it, and then trust it.”
 
 ---
 
-## Deux portes d'entrée
+## About
 
-| | **Cours** | **Lab** |
-|--|-----------|---------|
-| **Pour qui ?** | Apprendre, suivre une progression | Explorer, expérimenter, creuser |
-| **Format** | Épisodes PDF + notebooks, linéaire | Case studies, scripts, liberté |
-| **Commencer** | [Ep. I](#-linkedin-series--deep-learning-from-scratch-3-épisodes) ou [birth_of_a_neuron](notebooks/birth_of_a_neuron.ipynb) | [lab/mnist](lab/mnist/) ou [lab/cnn](lab/cnn/) |
+I'm **Pierre Chambet**, a data and deep learning engineer-in-the-making who decided to rebuild deep learning from scratch — not by copying frameworks, but by understanding every equation, line, and gradient.
+
+This repo is a **learning-in-public lab**. It documents the full path from a hand-coded neuron in NumPy to a convolutional network on MNIST — explained, derived, and visualized with care. It's both a portfolio of understanding and a teaching resource: math → code → intuition → result.
 
 ---
 
-## Cours — Parcours principal
+## Where to begin
 
-Série pédagogique : **théorie → gradients → code**. Un épisode à la fois.
+This repository holds two things: a **course** (a clear path from neuron to CNN) and a **lab** (a space to explore). Both live under the same roof — pick the door that fits your mood.
 
-### Série LinkedIn (3 épisodes)
+---
 
-| Épisode | Titre | Contenu | Lien |
-|:-------:|-------|---------|------|
-| **I** | *Theory of a Neuron* | PDF 10 p. — fonction linéaire, sigmoid, log-loss | [PDF](pdf/Theory%20of%20a%20Neuron.pdf) |
-| **II** | *The Art of Descent* | PDF 12 p. — chain rule, ∂ℓ/∂w, ∂ℓ/∂b | [PDF](pdf/The%20Art%20of%20Descent.pdf) · [Notebook](notebooks/02_gradients_single_neuron.ipynb) |
-| **III** | *Birth of a Neuron* | PDF 18 p. + Colab — neurone codé à la main | [PDF](pdf/Birth%20of%20a%20Neuron.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) |
+## Two ways in
 
-> Comment **NEURON** (Ep. I), **GRADIENT** (Ep. II) ou **BIRTH** (Ep. III) sur les posts LinkedIn pour recevoir le PDF en DM.  
+| | **Course** | **Lab** |
+|--|------------|---------|
+| **For** | Learning, following a clear path | Exploring, experimenting, going deeper |
+| **Format** | PDF episodes + notebooks, step by step | Case studies, scripts, open-ended play |
+| **Start here** | [Ep. I](#-linkedin-series--3-episodes) or [birth_of_a_neuron](notebooks/birth_of_a_neuron.ipynb) | [lab/mnist](lab/mnist/) or [lab/cnn](lab/cnn/) |
+
+---
+
+## Course — The main path
+
+A guided journey: **theory → gradients → code**. One episode at a time. No rush. No fluff.
+
+### LinkedIn Series (3 episodes)
+
+| Episode | Title | What you get | Link |
+|:-------:|------|--------------|------|
+| **I** | *Theory of a Neuron* | 10-page PDF — linear function, sigmoid, log-loss | [PDF](pdf/Theory%20of%20a%20Neuron.pdf) |
+| **II** | *The Art of Descent* | 12-page PDF — chain rule, ∂ℓ/∂w, ∂ℓ/∂b | [PDF](pdf/The%20Art%20of%20Descent.pdf) · [Notebook](notebooks/02_gradients_single_neuron.ipynb) |
+| **III** | *Birth of a Neuron* | 18-page PDF + Colab — neuron coded by hand | [PDF](pdf/Birth%20of%20a%20Neuron.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) |
+
+> Reply with **NEURON** (Ep. I), **GRADIENT** (Ep. II), or **BIRTH** (Ep. III) on the LinkedIn posts to receive the PDF via DM.  
 > #DeepLearningJourney
 
-### Notebooks du cours
+### Course notebooks
 
-| # | Notebook | Focus | Lié à |
-|:-:|-----------|--------|-------|
-| — | **birth_of_a_neuron** | Neurone codé à la main (toxic plants) | Ep. III · Colab |
-| 01 | **Single Neuron** | Linear model, sigmoid | Thème Ep. I |
+| # | Notebook | Focus | Tied to |
+|:-:|----------|-------|---------|
+| — | **birth_of_a_neuron** | Neuron coded by hand (toxic plants) | Ep. III · Colab |
+| 01 | **Single Neuron** | Linear model, sigmoid | Ep. I theme |
 | 02 | **Gradients Single Neuron** | ∂L/∂w, ∂L/∂b, chain rule | Ep. II |
 | 04 | **Training Loop** | Forward → loss → backward → update (cats vs dogs) | — |
-| 07 | **Two-Layer Gradients** | Backprop 2 couches | — |
-| 08 | **Two-Layer Network** | Réseau 2 couches sur images | — |
-| 09 | **Backprop Any Depth** | Backprop L couches | — |
-| 11 | **MNIST MLP Baseline** | Dense network, MNIST | — |
+| 07 | **Two-Layer Gradients** | Backprop for 2 layers | — |
+| 08 | **Two-Layer Network** | 2-layer network on images | — |
+| 09 | **Backprop Any Depth** | Backprop for L layers | — |
+| 11 | **MNIST MLP Baseline** | Dense network on MNIST | — |
 | 12 | **MNIST CNN Baseline** | CNN, feature maps | — |
 
-### Guides additionnels (PDF)
+### Extended guides (PDF)
 
 | File | Theme |
 |------|--------|
-| [main.pdf](pdf/main.pdf) | Synthèse globale — neurones à boucle d'apprentissage |
-| [mnist.pdf](pdf/mnist.pdf) | Réseaux denses sur MNIST |
-| [CNN.pdf](pdf/CNN.pdf) | Comprendre les convolutions |
+| [main.pdf](pdf/main.pdf) | Full picture — neurons to the training loop |
+| [mnist.pdf](pdf/mnist.pdf) | Dense networks on MNIST |
+| [CNN.pdf](pdf/CNN.pdf) | Understanding convolutions |
 
 ---
 
-## Lab — Exploration
+## Lab — Go further
 
-Pour aller plus loin : case studies, scripts, expérimentations.
+Where the course leaves off, the Lab begins. Case studies, scripts, experiments — room to breathe, break things, and learn by doing.
 
-👉 **[Voir le Lab](lab/README.md)**
+👉 **[Enter the Lab](lab/README.md)**
 
-| Projet | Description |
-|--------|-------------|
-| [**MNIST Case Study**](lab/mnist/) | Pipeline MLP complet, normalisation, training curves |
-| [**CNN Case Study**](lab/cnn/) | Convolutions, filtres, pooling sur MNIST |
+| Project | What's inside |
+|---------|---------------|
+| [**MNIST Case Study**](lab/mnist/) | Full MLP pipeline — normalization, training curves, evaluation |
+| [**CNN Case Study**](lab/cnn/) | Convolutions on MNIST — filters, pooling, architecture |
 
 ---
 
@@ -88,56 +102,56 @@ pip install -r requirements.txt
 jupyter lab notebooks/birth_of_a_neuron.ipynb
 ```
 
-**Sans install :** [Colab — birth_of_a_neuron](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb)
+**No install needed:** [Colab — birth_of_a_neuron](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb)
 
 ---
 
-## Structure du dépôt
+## Repository structure
 
 ```
 Deep-Learning-from-Scratch/
-├── notebooks/           # Cours — birth_of_a_neuron, 01, 02, 04, 07–09, 11, 12
-├── pdf/                 # Guides (Ep. I–III, main, mnist, CNN)
-├── lab/                 # Lab — case studies
-│   ├── mnist/           # MNIST MLP (notebook + train_mlp.py)
-│   └── cnn/             # CNN (notebook + train_cnn.py)
-├── src/                 # utilities.py (load_data HDF5)
-├── data/                # trainset.hdf5, testset.hdf5 (cats vs dogs)
-├── assets/              # figures, banners
+├── notebooks/           # Course — birth_of_a_neuron, 01, 02, 04, 07–09, 11, 12
+├── pdf/                # Guides (Ep. I–III, main, mnist, CNN)
+├── lab/                # Lab — case studies
+│   ├── mnist/          # MNIST MLP (notebook + train_mlp.py)
+│   └── cnn/            # CNN (notebook + train_cnn.py)
+├── src/                # utilities.py (load_data for HDF5)
+├── data/               # trainset.hdf5, testset.hdf5 (cats vs dogs)
+├── assets/             # Figures, banners
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## Philosophie
+## Philosophy
 
 > "Learning isn't remembering — it's rebuilding."
 
-Pas de boîtes noires. Chaque poids, gradient et mise à jour est tracé.
+No black boxes. Every weight, every gradient, every update — traced and understood. That's the point.
 
 ---
 
-## Pour les recruteurs
+## For recruiters
 
-**En 5 minutes**, ce dépôt montre que je :
-- Comprends les maths derrière les réseaux de neurones
-- Implémente et débogue des modèles de bout en bout
-- Communique clairement et visuellement
-- Apprends en autonomie et livre des résultats propres
+**In five minutes**, this repo shows that I:
+- Understand the math behind neural networks
+- Implement and debug deep learning models end-to-end
+- Communicate complex ideas clearly and visually
+- Learn independently, structure my work, and deliver clean results
 
-**Points d'entrée :**
-- [birth_of_a_neuron.ipynb](notebooks/birth_of_a_neuron.ipynb) — clarté
-- [02_gradients_single_neuron.ipynb](notebooks/02_gradients_single_neuron.ipynb) — théorie
+**Suggested entry points:**
+- [birth_of_a_neuron.ipynb](notebooks/birth_of_a_neuron.ipynb) — clarity
+- [02_gradients_single_neuron.ipynb](notebooks/02_gradients_single_neuron.ipynb) — theory
 - [11_mnist_mlp_baseline.ipynb](notebooks/11_mnist_mlp_baseline.ipynb) — application
-- [12_mnist_cnn_baseline.ipynb](notebooks/12_mnist_cnn_baseline.ipynb) — maturité
+- [12_mnist_cnn_baseline.ipynb](notebooks/12_mnist_cnn_baseline.ipynb) — maturity
 
 ---
 
 ## Contribute / Connect
 
-Une erreur, une idée ? Issue ou PR bienvenues.  
-Tu apprends en public aussi ? On se connecte.
+Found an error or an idea worth exploring? Open an issue or a PR.  
+Learning in public too? Let's connect.
 
 <p align="center">
   <a href="https://www.linkedin.com/in/pierre-chambet-289a5b220/">
