@@ -3,6 +3,8 @@
 **Date :** 27 février 2026  
 **Objectif :** Remettre en lien les 3 épisodes LinkedIn (cours PDF) avec le dépôt GitHub, clarifier les correspondances et identifier les écarts.
 
+**Mise à jour (merge WIL) :** Fusion avec le Lab WIL — structure Cours + Lab, case studies MNIST/CNN intégrés, imports corrigés (birth_of_a_neuron, src.utilities).
+
 ---
 
 ## 1. Ta série LinkedIn réelle — Les 3 épisodes

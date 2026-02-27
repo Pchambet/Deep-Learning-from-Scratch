@@ -33,3 +33,6 @@ data/*.hdf5
 
 # Figures
 assets/figures/*.png
+
+# Lab outputs
+lab/*/outputs/
