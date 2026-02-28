@@ -35,3 +35,10 @@ latex/**/*.fdb_latexmk
 latex/**/*.out
 latex/**/out/
 latex/**/dist/
+
+# LaTeX sources & PDFs (keep local, don't push)
+latex/
+
+# Audits (local only)
+*AUDIT*.md
+**/AUDIT*.md
