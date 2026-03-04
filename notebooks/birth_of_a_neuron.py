@@ -2,6 +2,7 @@
 Neuron functions for Ep III (Birth of a Neuron) — used by 04_training_loop_from_scratch.
 Import directly: no nbimporter needed. Works on Colab, local, everywhere.
 """
+
 import numpy as np
 
 

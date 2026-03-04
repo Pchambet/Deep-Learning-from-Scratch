@@ -1,5 +1,6 @@
 import os
 import random
+
 import numpy as np
 
 # Prefer TensorFlow on Apple Silicon per requirements.txt
@@ -55,7 +56,9 @@ def main():
         keras.callbacks.ModelCheckpoint(
             filepath="outputs/mlp_mnist.keras", save_best_only=True, monitor="val_accuracy"
         ),
-        keras.callbacks.EarlyStopping(monitor="val_accuracy", patience=3, restore_best_weights=True),
+        keras.callbacks.EarlyStopping(
+            monitor="val_accuracy", patience=3, restore_best_weights=True
+        ),
     ]
 
     history = model.fit(

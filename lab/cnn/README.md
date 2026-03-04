@@ -4,9 +4,11 @@ A focused exploration of Convolutional Neural Networks on MNIST.
 
 ## Run it
 
+
 ```bash
 python train_cnn.py
 ```
+
 Artifacts and curves → `outputs/`.
 
 **Notebook:** `CNN.ipynb`

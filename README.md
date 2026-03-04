@@ -4,9 +4,14 @@
 
 <h1 align="center">Deep Learning from Scratch</h1>
 <p align="center">
+  <a href="https://github.com/Pchambet/Deep-Learning-from-Scratch/actions/workflows/ci.yml">
+    <img src="https://github.com/Pchambet/Deep-Learning-from-Scratch/actions/workflows/ci.yml/badge.svg" alt="CI">
+  </a>
+</p>
+<p align="center">
   From first principles to real images — one neuron, one layer, one insight at a time.<br>
   <em>Part of <strong>WIL</strong> — Wide-Range Ideas Laboratory</em><br>
-  <a href="https://www.linkedin.com/in/pierre-chambet-289a5b220/">LinkedIn</a> · 
+  <a href="https://www.linkedin.com/in/pierre-chambet-289a5b220/">LinkedIn</a> ·
   <a href="https://github.com/Pchambet">GitHub</a>
 </p>
 
@@ -32,11 +37,11 @@ This repository holds two things: a **course** (a clear path from neuron to CNN)
 
 ## Two ways in
 
-| | **Course** | **Lab** |
-|--|------------|---------|
+|  | **Course** | **Lab** |
+| -- | ------------ | --------- |
 | **For** | Learning, following a clear path | Exploring, experimenting, going deeper |
 | **Format** | PDF episodes + notebooks, step by step | Case studies, scripts, open-ended play |
-| **Start here** | [Ep. I](#-linkedin-series--3-episodes) or [birth_of_a_neuron](notebooks/birth_of_a_neuron.ipynb) | [lab/mnist](lab/mnist/) or [lab/cnn](lab/cnn/) |
+| **Start here** | [Ep. I](#linkedin-series-3-episodes) or [birth_of_a_neuron](notebooks/birth_of_a_neuron.ipynb) | [lab/mnist](lab/mnist/) or [lab/cnn](lab/cnn/) |
 
 ---
 
@@ -47,22 +52,23 @@ A guided journey: **theory → gradients → code**. One episode at a time. No r
 ### LinkedIn Series (3 episodes)
 
 | Episode | Title | What you get | Link |
-|:-------:|------|--------------|------|
+| :-------: | ------ | -------------- | ------ |
 | **I** | *Theory of a Neuron* | 10-page PDF — linear function, sigmoid, log-loss | [PDF](pdf/Theory%20of%20a%20Neuron.pdf) |
 | **II** | *The Art of Descent* | 12-page PDF — chain rule, ∂ℓ/∂w, ∂ℓ/∂b | [PDF](pdf/The%20Art%20of%20Descent.pdf) · [Notebook](notebooks/02_gradients_single_neuron.ipynb) |
 | **III** | *Birth of a Neuron* | 18-page PDF + Colab — neuron coded by hand | [PDF](pdf/Birth%20of%20a%20Neuron.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) |
 
-> Reply with **NEURON** (Ep. I), **GRADIENT** (Ep. II), or **BIRTH** (Ep. III) on the LinkedIn posts to receive the PDF via DM.  
+> Reply with **NEURON** (Ep. I), **GRADIENT** (Ep. II), or **BIRTH** (Ep. III) on the LinkedIn posts to receive the PDF via DM.
 > #DeepLearningJourney
 
 ### Course notebooks
 
 | # | Notebook | Focus | Tied to |
-|:-:|----------|-------|---------|
+| :-: | ---------- | ------- | --------- |
 | — | **birth_of_a_neuron** | Neuron coded by hand (toxic plants) | Ep. III · Colab |
 | 01 | **Single Neuron** | Linear model, sigmoid | Ep. I theme |
 | 02 | **Gradients Single Neuron** | ∂L/∂w, ∂L/∂b, chain rule | Ep. II |
 | 04 | **Training Loop** | Forward → loss → backward → update (cats vs dogs) | — |
+| 05 | **From One Neuron to a Brain** | First 2-layer ANN from scratch (nonlinear boundary) | Episode V prep |
 | 07 | **Two-Layer Gradients** | Backprop for 2 layers | — |
 | 08 | **Two-Layer Network** | 2-layer network on images | — |
 | 09 | **Backprop Any Depth** | Backprop for L layers | — |
@@ -72,7 +78,7 @@ A guided journey: **theory → gradients → code**. One episode at a time. No r
 ### Extended guides (PDF)
 
 | File | Theme |
-|------|--------|
+| ------ | -------- |
 | [main.pdf](pdf/main.pdf) | Full picture — neurons to the training loop |
 | [mnist.pdf](pdf/mnist.pdf) | Dense networks on MNIST |
 | [CNN.pdf](pdf/CNN.pdf) | Understanding convolutions |
@@ -86,7 +92,7 @@ Where the course leaves off, the Lab begins. Case studies, scripts, experiments 
 👉 **[Enter the Lab](lab/README.md)**
 
 | Project | What's inside |
-|---------|---------------|
+| ------- | --------------- |
 | [**MNIST Case Study**](lab/mnist/) | Full MLP pipeline — normalization, training curves, evaluation |
 | [**CNN Case Study**](lab/cnn/) | Convolutions on MNIST — filters, pooling, architecture |
 
@@ -100,6 +106,27 @@ cd Deep-Learning-from-Scratch
 python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 jupyter lab notebooks/birth_of_a_neuron.ipynb
+```
+
+### Python compatibility
+
+- **Core notebooks and scripts:** Python **3.10+**
+- **TensorFlow notebooks/scripts (MNIST/CNN):** Python **3.10–3.12** recommended
+- If you are on macOS Apple Silicon, install from `requirements.txt` (includes `tensorflow-macos` + `tensorflow-metal` markers)
+
+### Quality checks
+
+```bash
+make quality          # compile + smoke test
+make precommit        # run formatting/lint hooks
+make episode5-demo    # run Episode V demo (make_circles)
+```
+
+Optional one-time setup:
+
+```bash
+pip install pre-commit
+pre-commit install
 ```
 
 **No install needed:** [Colab — birth_of_a_neuron](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb)
@@ -152,7 +179,7 @@ No black boxes. Every weight, every gradient, every update — traced and unders
 
 ## Contribute / Connect
 
-Found an error or an idea worth exploring? Open an issue or a PR.  
+Found an error or an idea worth exploring? Open an issue or a PR.
 Learning in public too? Let's connect.
 
 <p align="center">

@@ -1,7 +1,9 @@
 # src/utilities.py
+import os
+
 import h5py
 import numpy as np
-import os
+
 
 def load_data():
     """
