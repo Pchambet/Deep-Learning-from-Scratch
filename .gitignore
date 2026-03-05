@@ -39,6 +39,11 @@ latex/**/dist/
 # LaTeX sources & PDFs (keep local, don't push)
 latex/
 
-# Audits (local only)
+# Audits & working docs (local only)
 *AUDIT*.md
 **/AUDIT*.md
+FONDATIONS*.md
+**/FONDATIONS*.md
+
+# Copilot instructions (local only)
+.github/instructions/

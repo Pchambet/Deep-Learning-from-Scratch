@@ -28,7 +28,8 @@ copy-pdf:
 	@test -f latex/main/main.pdf && cp latex/main/main.pdf pdf/ || true
 	@test -f latex/mnist/dist/mnist.pdf && cp latex/mnist/dist/mnist.pdf pdf/ || test -f latex/mnist/mnist.pdf && cp latex/mnist/mnist.pdf pdf/ || true
 	@test -f latex/cnn/dist/CNN.pdf && cp latex/cnn/dist/CNN.pdf pdf/ || test -f latex/cnn/CNN.pdf && cp latex/cnn/CNN.pdf pdf/ || true
-	@test -f latex/episode_05/episode_05.pdf && cp latex/episode_05/episode_05.pdf pdf/ || true
+	@test -f latex/episode_04/episode_04.pdf && cp "latex/episode_04/episode_04.pdf" "pdf/All Eyes on You.pdf" || true
+	@test -f latex/episode_05/episode_05.pdf && cp "latex/episode_05/episode_05.pdf" "pdf/The Rise of Intelligence.pdf" || true
 	@echo "Done."
 
 smoke:

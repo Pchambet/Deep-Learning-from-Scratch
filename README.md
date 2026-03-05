@@ -49,15 +49,17 @@ This repository holds two things: a **course** (a clear path from neuron to CNN)
 
 A guided journey: **theory → gradients → code**. One episode at a time. No rush. No fluff.
 
-### LinkedIn Series (3 episodes)
+### LinkedIn Series (5 episodes)
 
 | Episode | Title | What you get | Link |
 | :-------: | ------ | -------------- | ------ |
 | **I** | *Theory of a Neuron* | 10-page PDF — linear function, sigmoid, log-loss | [PDF](pdf/Theory%20of%20a%20Neuron.pdf) |
 | **II** | *The Art of Descent* | 12-page PDF — chain rule, ∂ℓ/∂w, ∂ℓ/∂b | [PDF](pdf/The%20Art%20of%20Descent.pdf) · [Notebook](notebooks/02_gradients_single_neuron.ipynb) |
 | **III** | *Birth of a Neuron* | 18-page PDF + Colab — neuron coded by hand | [PDF](pdf/Birth%20of%20a%20Neuron.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) |
+| **IV** | *All Eyes on You* | Training loop on real images (cats vs dogs) | [PDF](pdf/All%20Eyes%20on%20You.pdf) |
+| **V** | *The Rise of Intelligence* | 25-page PDF — full neural network theory, forward & backprop | [PDF](pdf/The%20Rise%20of%20Intelligence.pdf) |
 
-> Reply with **NEURON** (Ep. I), **GRADIENT** (Ep. II), or **BIRTH** (Ep. III) on the LinkedIn posts to receive the PDF via DM.
+> Reply with **NEURON** (Ep. I), **GRADIENT** (Ep. II), **BIRTH** (Ep. III), or **RISE** (Ep. V) on the LinkedIn posts to receive the PDF via DM.
 > #DeepLearningJourney
 
 ### Course notebooks
@@ -68,7 +70,7 @@ A guided journey: **theory → gradients → code**. One episode at a time. No r
 | 01 | **Single Neuron** | Linear model, sigmoid | Ep. I theme |
 | 02 | **Gradients Single Neuron** | ∂L/∂w, ∂L/∂b, chain rule | Ep. II |
 | 04 | **Training Loop** | Forward → loss → backward → update (cats vs dogs) | — |
-| 05 | **From One Neuron to a Brain** | First 2-layer ANN from scratch (nonlinear boundary) | Episode V prep |
+| 05 | **From One Neuron to a Brain** | First 2-layer ANN from scratch (nonlinear boundary) | Ep. V |
 | 07 | **Two-Layer Gradients** | Backprop for 2 layers | — |
 | 08 | **Two-Layer Network** | 2-layer network on images | — |
 | 09 | **Backprop Any Depth** | Backprop for L layers | — |
