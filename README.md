@@ -58,6 +58,7 @@ A guided journey: **theory → gradients → code**. One episode at a time. No r
 | **III** | *Birth of a Neuron* | 18-page PDF + Colab — neuron coded by hand | [PDF](pdf/Birth%20of%20a%20Neuron.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) |
 | **IV** | *All Eyes on You* | Training loop on real images (cats vs dogs) | [PDF](pdf/All%20Eyes%20on%20You.pdf) |
 | **V** | *The Rise of Intelligence* | 25-page PDF — full neural network theory, forward & backprop | [PDF](pdf/The%20Rise%20of%20Intelligence.pdf) |
+| **VI** | *Alive* | 18-page PDF + Colab — 2-layer network coded from scratch | [PDF](pdf/Alive.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/06_alive.ipynb) |
 
 > Reply with **NEURON** (Ep. I), **GRADIENT** (Ep. II), **BIRTH** (Ep. III), or **RISE** (Ep. V) on the LinkedIn posts to receive the PDF via DM.
 > #DeepLearningJourney
@@ -74,6 +75,7 @@ A guided journey: **theory → gradients → code**. One episode at a time. No r
 | 07 | **Two-Layer Gradients** | Backprop for 2 layers | — |
 | 08 | **Two-Layer Network** | 2-layer network on images | — |
 | 09 | **Backprop Any Depth** | Backprop for L layers | — |
+| 06 | **Alive** | 2-layer network from scratch (circles + cats vs dogs) | Ep. VI · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/06_alive.ipynb) |
 | 11 | **MNIST MLP Baseline** | Dense network on MNIST | — |
 | 12 | **MNIST CNN Baseline** | CNN, feature maps | — |
 
