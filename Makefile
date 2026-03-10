@@ -1,7 +1,8 @@
 # Deep Learning from Scratch — unified build
-PYTHON ?= python3
+# Prefer venv if present (has pytest, deps)
+PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: latex latex-main latex-mnist latex-cnn latex-episode05 copy-pdf smoke episode5-demo quality precommit clean
+.PHONY: latex latex-main latex-mnist latex-cnn latex-episode05 copy-pdf smoke episode5-demo test quality precommit clean
 
 # Build all LaTeX and copy to pdf/
 latex: latex-main latex-mnist latex-cnn latex-episode05
@@ -40,9 +41,14 @@ episode5-demo:
 	@echo "Running Episode 5 demo..."
 	@$(PYTHON) scripts/episode_05_demo.py
 
+test:
+	@echo "Running pytest..."
+	@$(PYTHON) -m pytest tests/ -v
+
 quality:
 	@echo "Compiling Python sources..."
 	@$(PYTHON) -m compileall src lab scripts notebooks/birth_of_a_neuron.py
+	@$(MAKE) test
 	@$(MAKE) smoke
 
 precommit:

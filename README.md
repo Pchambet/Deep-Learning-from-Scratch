@@ -73,11 +73,9 @@ A guided journey: **theory → gradients → code**. One episode at a time. No r
 | 02 | **Gradients Single Neuron** | ∂L/∂w, ∂L/∂b, chain rule | Ep. II |
 | 04 | **Training Loop** | Forward → loss → backward → update (cats vs dogs) | — |
 | 05 | **From One Neuron to a Brain** | First 2-layer ANN from scratch (nonlinear boundary) | Ep. V |
-| 07 | **Two-Layer Gradients** | Backprop for 2 layers | — |
-| 08 | **Two-Layer Network** | 2-layer network on images | — |
-| 09 | **Backprop Any Depth** | Backprop for L layers | — |
 | 06 | **Alive** | 2-layer network from scratch (circles + cats vs dogs) | Ep. VI · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/06_alive.ipynb) |
 | 07 | **Horizon of Depth** | L-layer network (circles, moons, spirals, cats vs dogs) | Ep. VII · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/07_horizon_of_depth.ipynb) |
+| 08 | **Two-Layer Network** | 2-layer network on images | — |
 | 11 | **MNIST MLP Baseline** | Dense network on MNIST | — |
 | 12 | **MNIST CNN Baseline** | CNN, feature maps | — |
 
@@ -123,7 +121,8 @@ jupyter lab notebooks/birth_of_a_neuron.ipynb
 ### Quality checks
 
 ```bash
-make quality          # compile + smoke test
+make quality          # compile + pytest + smoke test
+make test             # run pytest (utilities, two_layer, birth_of_a_neuron)
 make precommit        # run formatting/lint hooks
 make episode5-demo    # run Episode V demo (make_circles)
 ```
@@ -143,7 +142,8 @@ pre-commit install
 
 ```
 Deep-Learning-from-Scratch/
-├── notebooks/           # Course — birth_of_a_neuron, 01, 02, 04, 07–09, 11, 12
+├── notebooks/           # Course — birth_of_a_neuron, 01, 02, 04–08, 11, 12
+├── tests/               # pytest — utilities, two_layer_network, birth_of_a_neuron
 ├── pdf/                 # Built guides (Ep. I–III, main, mnist, CNN)
 ├── latex/               # LaTeX sources — main, mnist, cnn (edit here, build → pdf/)
 ├── lab/                 # Lab — case studies

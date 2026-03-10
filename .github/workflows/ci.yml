@@ -29,6 +29,10 @@ jobs:
         run: |
           python -m compileall src lab scripts notebooks/birth_of_a_neuron.py
 
+      - name: Run pytest
+        run: |
+          python -m pytest tests/ -v
+
       - name: Run notebook smoke test
         run: |
           python scripts/smoke_test.py

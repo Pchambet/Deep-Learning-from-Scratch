@@ -1,19 +1,19 @@
 import os
-import random
+import sys
 
-import numpy as np
+# Ensure repo root is on path (lab/cnn/ runs from Makefile)
+_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
 
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 
-import tensorflow as tf  # noqa: E402
+import numpy as np
+import tensorflow as tf  # noqa: E402, F401
 from tensorflow import keras  # noqa: E402
 from tensorflow.keras import layers  # noqa: E402
 
-
-def set_seed(seed: int = 42):
-    random.seed(seed)
-    np.random.seed(seed)
-    tf.random.set_seed(seed)
+from lab.common import save_training_curves, set_seed  # noqa: E402
 
 
 def load_mnist_cnn():
@@ -76,27 +76,7 @@ def main():
     test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
     print({"test_accuracy": float(test_acc), "test_loss": float(test_loss)})
 
-    try:
-        import matplotlib.pyplot as plt
-
-        plt.figure(figsize=(10, 4))
-        plt.subplot(1, 2, 1)
-        plt.plot(history.history["loss"], label="train")
-        plt.plot(history.history["val_loss"], label="val")
-        plt.title("Loss")
-        plt.legend()
-
-        plt.subplot(1, 2, 2)
-        plt.plot(history.history["accuracy"], label="train")
-        plt.plot(history.history["val_accuracy"], label="val")
-        plt.title("Accuracy")
-        plt.legend()
-
-        plt.tight_layout()
-        plt.savefig("outputs/cnn_training_curves.png", dpi=150)
-        plt.close()
-    except Exception as e:
-        print(f"Warning: could not save curves: {e}")
+    save_training_curves(history, "outputs/cnn_training_curves.png")
 
 
 if __name__ == "__main__":
