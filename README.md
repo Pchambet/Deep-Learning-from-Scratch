@@ -11,7 +11,7 @@
 <p align="center">
   From first principles to real images — one neuron, one layer, one insight at a time.<br>
   <em>Part of <strong>WIL</strong> — Wide-Range Ideas Laboratory</em><br>
-  <a href="https://www.linkedin.com/in/pierre-chambet-289a5b220/">LinkedIn</a> ·
+  <a href="https://www.linkedin.com/in/pierre-chambet/">LinkedIn</a> ·
   <a href="https://github.com/Pchambet">GitHub</a>
 </p>
 
@@ -41,7 +41,7 @@ This repository holds two things: a **course** (a clear path from neuron to CNN)
 | -- | ------------ | --------- |
 | **For** | Learning, following a clear path | Exploring, experimenting, going deeper |
 | **Format** | PDF episodes + notebooks, step by step | Case studies, scripts, open-ended play |
-| **Start here** | [Ep. I](#linkedin-series-3-episodes) or [birth_of_a_neuron](notebooks/birth_of_a_neuron.ipynb) | [lab/mnist](lab/mnist/) or [lab/cnn](lab/cnn/) |
+| **Start here** | [Ep. I](#linkedin-series-7-episodes) or [birth_of_a_neuron](notebooks/birth_of_a_neuron.ipynb) | [lab/mnist](lab/mnist/) or [lab/cnn](lab/cnn/) |
 
 ---
 
@@ -49,17 +49,17 @@ This repository holds two things: a **course** (a clear path from neuron to CNN)
 
 A guided journey: **theory → gradients → code**. One episode at a time. No rush. No fluff.
 
-### LinkedIn Series (5 episodes)
+### LinkedIn Series (7 episodes)
 
 | Episode | Title | What you get | Link |
 | :-------: | ------ | -------------- | ------ |
 | **I** | *Theory of a Neuron* | 10-page PDF — linear function, sigmoid, log-loss | [PDF](pdf/Theory%20of%20a%20Neuron.pdf) |
 | **II** | *The Art of Descent* | 12-page PDF — chain rule, ∂ℓ/∂w, ∂ℓ/∂b | [PDF](pdf/The%20Art%20of%20Descent.pdf) · [Notebook](notebooks/02_gradients_single_neuron.ipynb) |
 | **III** | *Birth of a Neuron* | 18-page PDF + Colab — neuron coded by hand | [PDF](pdf/Birth%20of%20a%20Neuron.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) |
-| **IV** | *All Eyes on You* | Training loop on real images (cats vs dogs) | [PDF](pdf/All%20Eyes%20on%20You.pdf) |
-| **V** | *The Rise of Intelligence* | 25-page PDF — full neural network theory, forward & backprop | [PDF](pdf/The%20Rise%20of%20Intelligence.pdf) |
-| **VI** | *Alive* | 18-page PDF + Colab — 2-layer network coded from scratch | [PDF](pdf/Alive.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/06_alive.ipynb) |
-| **VII** | *Horizon of Depth* | 16-page PDF + Colab — generalized L-layer network | [PDF](pdf/Horizon%20of%20Depth.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/07_horizon_of_depth.ipynb) |
+| **IV** | *All Eyes on You* | 9-page PDF — training loop on real images (cats vs dogs) | [PDF](pdf/All%20Eyes%20on%20You.pdf) |
+| **V** | *The Rise of Intelligence* | 26-page PDF — full neural network theory, forward & backprop | [PDF](pdf/The%20Rise%20of%20Intelligence.pdf) |
+| **VI** | *Alive* | 20-page PDF + Colab — 2-layer network coded from scratch | [PDF](pdf/Alive.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/06_alive.ipynb) |
+| **VII** | *Horizon of Depth* | 18-page PDF + Colab — generalized L-layer network | [PDF](pdf/Horizon%20of%20Depth.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/07_horizon_of_depth.ipynb) |
 
 > Reply with **NEURON** (Ep. I), **GRADIENT** (Ep. II), **BIRTH** (Ep. III), or **RISE** (Ep. V) on the LinkedIn posts to receive the PDF via DM.
 > #DeepLearningJourney
@@ -144,12 +144,12 @@ pre-commit install
 Deep-Learning-from-Scratch/
 ├── notebooks/           # Course — birth_of_a_neuron, 01, 02, 04–08, 11, 12
 ├── tests/               # pytest — utilities, two_layer_network, birth_of_a_neuron
-├── pdf/                 # Built guides (Ep. I–III, main, mnist, CNN)
-├── latex/               # LaTeX sources — main, mnist, cnn (edit here, build → pdf/)
+├── pdf/                 # Built guides (Ep. I–VII, main, mnist, CNN)
+├── latex/               # LaTeX sources — episode_04–07, main, mnist, cnn
 ├── lab/                 # Lab — case studies
 │   ├── mnist/           # MNIST MLP (notebook + train_mlp.py)
 │   └── cnn/             # CNN (notebook + train_cnn.py)
-├── src/                 # utilities.py (load_data for HDF5)
+├── src/                 # utilities.py, two_layer_network.py
 ├── data/                # trainset.hdf5, testset.hdf5 (cats vs dogs)
 ├── assets/              # Figures, banners, photos
 ├── Makefile             # make latex → build all PDFs
@@ -189,7 +189,7 @@ Found an error or an idea worth exploring? Open an issue or a PR.
 Learning in public too? Let's connect.
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/pierre-chambet-289a5b220/">
+  <a href="https://www.linkedin.com/in/pierre-chambet/">
     <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-blue?style=flat-square&logo=linkedin" alt="LinkedIn">
   </a>
   <a href="https://github.com/Pchambet">
@@ -201,5 +201,5 @@ Learning in public too? Let's connect.
 
 <p align="center"><i>
 Deep Learning from Scratch — built with patience, mathematics, and curiosity.<br>
-Part of WIL™ — Wide-Range Ideas Laboratory · © 2025 Pierre Chambet
+Part of WIL™ — Wide-Range Ideas Laboratory · © 2026 Pierre Chambet
 </i></p>

@@ -2,10 +2,10 @@
 # Prefer venv if present (has pytest, deps)
 PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: latex latex-main latex-mnist latex-cnn latex-episode05 copy-pdf smoke episode5-demo test quality precommit clean
+.PHONY: latex latex-main latex-mnist latex-cnn latex-episode04 latex-episode05 latex-episode06 latex-episode07 copy-pdf smoke episode5-demo test quality precommit clean
 
 # Build all LaTeX and copy to pdf/
-latex: latex-main latex-mnist latex-cnn latex-episode05
+latex: latex-main latex-mnist latex-cnn latex-episode04 latex-episode05 latex-episode06 latex-episode07
 	@$(MAKE) copy-pdf
 
 latex-main:
@@ -20,9 +20,21 @@ latex-cnn:
 	@echo "Building CNN.pdf..."
 	@cd latex/cnn && $(MAKE) && cd ../..
 
+latex-episode04:
+	@echo "Building episode_04.pdf..."
+	@cd latex/episode_04 && $(MAKE) && cd ../..
+
 latex-episode05:
 	@echo "Building episode_05.pdf..."
 	@cd latex/episode_05 && $(MAKE) && cd ../..
+
+latex-episode06:
+	@echo "Building episode_06.pdf..."
+	@cd latex/episode_06 && $(MAKE) && cd ../..
+
+latex-episode07:
+	@echo "Building episode_07.pdf..."
+	@cd latex/episode_07 && $(MAKE) && cd ../..
 
 copy-pdf:
 	@echo "Copying PDFs to pdf/..."
@@ -31,6 +43,8 @@ copy-pdf:
 	@test -f latex/cnn/dist/CNN.pdf && cp latex/cnn/dist/CNN.pdf pdf/ || test -f latex/cnn/CNN.pdf && cp latex/cnn/CNN.pdf pdf/ || true
 	@test -f latex/episode_04/episode_04.pdf && cp "latex/episode_04/episode_04.pdf" "pdf/All Eyes on You.pdf" || true
 	@test -f latex/episode_05/episode_05.pdf && cp "latex/episode_05/episode_05.pdf" "pdf/The Rise of Intelligence.pdf" || true
+	@test -f latex/episode_06/episode_06.pdf && cp "latex/episode_06/episode_06.pdf" "pdf/Alive.pdf" || true
+	@test -f latex/episode_07/episode_07.pdf && cp "latex/episode_07/episode_07.pdf" "pdf/Horizon of Depth.pdf" || true
 	@echo "Done."
 
 smoke:
@@ -59,4 +73,7 @@ clean:
 	@cd latex/main && make clean && cd ../..
 	@cd latex/mnist && make clean && cd ../..
 	@cd latex/cnn && make clean && cd ../..
+	@cd latex/episode_04 && make clean && cd ../..
 	@cd latex/episode_05 && make clean && cd ../..
+	@cd latex/episode_06 && make clean && cd ../..
+	@cd latex/episode_07 && make clean && cd ../..
