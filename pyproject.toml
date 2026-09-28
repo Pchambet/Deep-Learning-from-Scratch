@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "widl"
+version = "0.0.1"
+description = "WIL utilities for notebooks (data loaders, seeds, simple helpers)"
+authors = [{name = "Pierre Chambet"}]
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -9,6 +9,8 @@ Less but better. Curated, focused, and beautiful.
 
 [Read preview](assets/fundamentals.pdf){ target=_blank }
 
+Companion notebook: [`guide_01_companion.ipynb`](https://github.com/Pchambet/wtf-is-deep-learning/blob/main/notebooks/guide_01_companion.ipynb) · [Open in Colab](https://colab.research.google.com/github/Pchambet/wtf-is-deep-learning/blob/main/notebooks/guide_01_companion.ipynb)
+
 ## Guide 2 — MLP on MNIST (Premium)
 
 - What you learn: full MLP pipeline, normalization, flattening, softmax + cross-entropy, training curves, evaluation.
