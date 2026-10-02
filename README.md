@@ -1,205 +1,170 @@
-<p align="center">
-  <img src="assets/banners/banner.png" alt="Deep Learning from Scratch — by Pierre Chambet" width="800">
-</p>
+# Deep-Learning-from-Scratch
 
-<h1 align="center">Deep Learning from Scratch</h1>
-<p align="center">
-  <a href="https://github.com/Pchambet/Deep-Learning-from-Scratch/actions/workflows/ci.yml">
-    <img src="https://github.com/Pchambet/Deep-Learning-from-Scratch/actions/workflows/ci.yml/badge.svg" alt="CI">
-  </a>
-</p>
-<p align="center">
-  From first principles to real images — one neuron, one layer, one insight at a time.<br>
-  <em>Part of <strong>WIL</strong> — Wide-Range Ideas Laboratory</em><br>
-  <a href="https://www.linkedin.com/in/pierre-chambet/">LinkedIn</a> ·
-  <a href="https://github.com/Pchambet">GitHub</a>
-</p>
+Neural networks rebuilt from first principles in NumPy, from one neuron to any depth:
+every gradient derived on paper, coded by hand, and checked against finite differences.
 
----
+[![CI](https://github.com/Pchambet/Deep-Learning-from-Scratch/actions/workflows/ci.yml/badge.svg)](https://github.com/Pchambet/Deep-Learning-from-Scratch/actions/workflows/ci.yml)
+![Python 3.12](https://img.shields.io/badge/python-3.12-0d9488)
+[![License: MIT](https://img.shields.io/badge/license-MIT-64748b)](LICENSE)
 
-> “Don't just run `.fit()`. Build the thing, understand it, and then trust it.”
+![Decision boundaries on two interleaved spirals: a single neuron reaches 63.0% held-out accuracy, one hidden layer 89.3%, three hidden layers 99.7%](docs/figures/hero_spirals.png)
 
----
+## TL;DR
 
-## About
+- **The maths is verified, not assumed.** Back-propagation in [`src/deep_network.py`](src/deep_network.py)
+  matches central finite differences to a relative error of at most 3.1 × 10⁻⁷ at depths 1 to 4,
+  for tanh and sigmoid hidden units. CI re-checks it on every push, along with the agreement of
+  the L-layer code with the single neuron of Episode III and the two-layer network of Episode VI.
+- **Depth is what bends the boundary.** On two interleaved spirals (300 held-out points), the
+  same gradient descent takes accuracy from 63.0% for a single neuron to 89.3% with one hidden
+  layer of 16 units and 99.7% with three.
+- **Width alone plateaus.** Over five seeds, the best single hidden layer reaches 95.7% (32
+  units, 129 parameters) and 64 units drop to 92.5%; two layers of 16 units reach 99.1%
+  (337 parameters, worst seed 98.7%).
+- **The honest limit.** On 64 × 64 cat/dog photos a fully connected 4096-32-32-1 network gets
+  98.5% of its training images right and 57.0% of unseen ones (±6.9 points, 95% interval on 200
+  images): it memorises. A small Keras CNN on MNIST makes a third of the errors of a dense
+  network (111 vs 359 out of 10,000), which is why convolutions come next.
+- **Seven episodes and a 117-page guide**, published as PDFs and rebuilt from their LaTeX
+  sources with `make latex`.
 
-I'm **Pierre Chambet**, a data and deep learning engineer-in-the-making who decided to rebuild deep learning from scratch — not by copying frameworks, but by understanding every equation, line, and gradient.
+## Why it matters
 
-This repo is a **learning-in-public lab**. It documents the full path from a hand-coded neuron in NumPy to a convolutional network on MNIST — explained, derived, and visualized with care. It's both a portfolio of understanding and a teaching resource: math → code → intuition → result.
+Frameworks make training a network one call to `.fit()`. When that call misbehaves (a loss
+that will not move, a model that is perfect on training data and useless after), the person
+who has derived and coded back-propagation by hand knows where to look. This repository is
+that derivation, written as a course: each step is small enough to check, and each claim
+about what a network can or cannot do is backed by a run you can repeat.
 
----
+## Approach
 
-## Where to begin
+The course was first published as a LinkedIn series. Each episode pairs a PDF (theory,
+derivations, figures) with a notebook (the same ideas in code).
 
-This repository holds two things: a **course** (a clear path from neuron to CNN) and a **lab** (a space to explore). Both live under the same roof — pick the door that fits your mood.
+| Episode | PDF | Notebook | What you build |
+| :-: | --- | --- | --- |
+| I | [Theory of a Neuron](pdf/Theory%20of%20a%20Neuron.pdf) (10 p.) | [`01_single_neuron`](notebooks/01_single_neuron.ipynb) | Linear model, sigmoid, log-loss |
+| II | [The Art of Descent](pdf/The%20Art%20of%20Descent.pdf) (12 p.) | [`02_gradients_single_neuron`](notebooks/02_gradients_single_neuron.ipynb) | Chain rule, ∂L/∂w and ∂L/∂b, gradient descent |
+| III | [Birth of a Neuron](pdf/Birth%20of%20a%20Neuron.pdf) (18 p.) | [`birth_of_a_neuron`](notebooks/birth_of_a_neuron.ipynb) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) | The neuron coded by hand |
+| IV | [All Eyes on You](pdf/All%20Eyes%20on%20You.pdf) (9 p.) | [`04_training_loop_from_scratch`](notebooks/04_training_loop_from_scratch.ipynb) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/04_training_loop_from_scratch.ipynb) | Training loop on real images, train/test split |
+| V | [The Rise of Intelligence](pdf/The%20Rise%20of%20Intelligence.pdf) (26 p.) | [`05_from_neuron_to_brain`](notebooks/05_from_neuron_to_brain.ipynb) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/05_from_neuron_to_brain.ipynb) | Two-layer network: forward and backward pass |
+| VI | [Alive](pdf/Alive.pdf) (20 p.) | [`06_alive`](notebooks/06_alive.ipynb) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/06_alive.ipynb) | Two-layer network in code; first overfitting |
+| VII | [Horizon of Depth](pdf/Horizon%20of%20Depth.pdf) (18 p.) | [`07_horizon_of_depth`](notebooks/07_horizon_of_depth.ipynb) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/07_horizon_of_depth.ipynb) | Any number of layers, written with loops |
 
----
+Going further:
 
-## Two ways in
+- [**The long guide**](pdf/main.pdf) (117 p.) covers the same path in one document; its deep
+  dives are notebooks [`08_two_layer_gradients`](notebooks/08_two_layer_gradients.ipynb)
+  (derivation), [`09_two_layer_network`](notebooks/09_two_layer_network.ipynb) and
+  [`10_backprop_any_depth`](notebooks/10_backprop_any_depth.ipynb).
+- **Guides** on [dense networks for MNIST](pdf/mnist.pdf) and [convolutions](pdf/CNN.pdf), with
+  their Keras baselines in [`lab/`](lab/).
+- **The tested code**: [`src/deep_network.py`](src/deep_network.py) (L layers),
+  [`src/two_layer_network.py`](src/two_layer_network.py) (Episode VI),
+  [`notebooks/birth_of_a_neuron.py`](notebooks/birth_of_a_neuron.py) (Episode III) and
+  [`src/gradient_check.py`](src/gradient_check.py).
 
-|  | **Course** | **Lab** |
-| -- | ------------ | --------- |
-| **For** | Learning, following a clear path | Exploring, experimenting, going deeper |
-| **Format** | PDF episodes + notebooks, step by step | Case studies, scripts, open-ended play |
-| **Start here** | [Ep. I](#linkedin-series-7-episodes) or [birth_of_a_neuron](notebooks/birth_of_a_neuron.ipynb) | [lab/mnist](lab/mnist/) or [lab/cnn](lab/cnn/) |
+```mermaid
+flowchart LR
+    A["Derive<br/>PDF episodes"] --> B["Code it in NumPy<br/>notebooks, src/"]
+    B --> C["Check it<br/>finite differences, pytest"]
+    C --> D["Measure it<br/>held-out data, seeds"]
+    D --> E["Find the limit<br/>images need convolutions"]
+```
 
----
+## Results
 
-## Course — The main path
+All numbers below come from `make figures` ([`scripts/make_figures.py`](scripts/make_figures.py)),
+which writes [`docs/results.json`](docs/results.json); the run is deterministic.
 
-A guided journey: **theory → gradients → code**. One episode at a time. No rush. No fluff.
+**Width versus depth.** Five seeds per architecture, same data, learning rate and epochs.
+Adding units to a single hidden layer helps up to 32 units, then stops; a second 16-unit layer
+is enough to solve the spirals.
 
-### LinkedIn Series (7 episodes)
+![Held-out accuracy against parameter count: one hidden layer peaks at 95.7% with 32 units, two hidden layers of 16 units reach 99.1%](docs/figures/capacity_sweep.png)
 
-| Episode | Title | What you get | Link |
-| :-------: | ------ | -------------- | ------ |
-| **I** | *Theory of a Neuron* | 10-page PDF — linear function, sigmoid, log-loss | [PDF](pdf/Theory%20of%20a%20Neuron.pdf) |
-| **II** | *The Art of Descent* | 12-page PDF — chain rule, ∂ℓ/∂w, ∂ℓ/∂b | [PDF](pdf/The%20Art%20of%20Descent.pdf) · [Notebook](notebooks/02_gradients_single_neuron.ipynb) |
-| **III** | *Birth of a Neuron* | 18-page PDF + Colab — neuron coded by hand | [PDF](pdf/Birth%20of%20a%20Neuron.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb) |
-| **IV** | *All Eyes on You* | 9-page PDF — training loop on real images (cats vs dogs) | [PDF](pdf/All%20Eyes%20on%20You.pdf) |
-| **V** | *The Rise of Intelligence* | 26-page PDF — full neural network theory, forward & backprop | [PDF](pdf/The%20Rise%20of%20Intelligence.pdf) |
-| **VI** | *Alive* | 20-page PDF + Colab — 2-layer network coded from scratch | [PDF](pdf/Alive.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/06_alive.ipynb) |
-| **VII** | *Horizon of Depth* | 18-page PDF + Colab — generalized L-layer network | [PDF](pdf/Horizon%20of%20Depth.pdf) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/07_horizon_of_depth.ipynb) |
+| Hidden layer widths | Parameters | Held-out accuracy, mean (min–max over 5 seeds) |
+| --- | ---: | --- |
+| 16 | 65 | 89.1% (82.7–95.0) |
+| 32 | 129 | 95.7% (93.3–97.3) |
+| 64 | 257 | 92.5% (86.7–94.7) |
+| 16-16 | 337 | 99.1% (98.7–99.3) |
+| 16-16-16 | 609 | 99.4% (99.0–99.7) |
+| 16-16-16-16 | 881 | 99.5% (99.0–100.0) |
 
-> Reply with **NEURON** (Ep. I), **GRADIENT** (Ep. II), **BIRTH** (Ep. III), or **RISE** (Ep. V) on the LinkedIn posts to receive the PDF via DM.
-> #DeepLearningJourney
+**Where fully connected networks stop.** Trained on the 1,000 cat/dog images of Episodes IV–VII,
+the network drives training accuracy to 98.5% while test accuracy hovers between 50% and 60.5%
+and ends at 57.0%. A flattened image throws away which pixels are neighbours; the network
+can only memorise. Episode VI's notebook shows the same thing with two layers (97.4% train,
+52.0% test).
 
-### Course notebooks
+![Train accuracy climbs to 98% while test accuracy stays between 50% and 60.5%](docs/figures/cats_dogs_overfitting.png)
 
-| # | Notebook | Focus | Tied to |
-| :-: | ---------- | ------- | --------- |
-| — | **birth_of_a_neuron** | Neuron coded by hand (toxic plants) | Ep. III · Colab |
-| 01 | **Single Neuron** | Linear model, sigmoid | Ep. I theme |
-| 02 | **Gradients Single Neuron** | ∂L/∂w, ∂L/∂b, chain rule | Ep. II |
-| 04 | **Training Loop** | Forward → loss → backward → update (cats vs dogs) | — |
-| 05 | **From One Neuron to a Brain** | First 2-layer ANN from scratch (nonlinear boundary) | Ep. V |
-| 06 | **Alive** | 2-layer network from scratch (circles + cats vs dogs) | Ep. VI · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/06_alive.ipynb) |
-| 07 | **Horizon of Depth** | L-layer network (circles, moons, spirals, cats vs dogs) | Ep. VII · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/07_horizon_of_depth.ipynb) |
-| 08 | **Two-Layer Network** | 2-layer network on images | — |
-| 11 | **MNIST MLP Baseline** | Dense network on MNIST | — |
-| 12 | **MNIST CNN Baseline** | CNN, feature maps | — |
+**What convolutions buy** (Keras baselines in [`lab/`](lab/), MNIST test set of 10,000 digits):
 
-### Extended guides (PDF)
+| Model | Test accuracy | Errors |
+| --- | ---: | ---: |
+| Dense 784-128-64-10 ([notebook](lab/mnist/mnist.ipynb)) | 96.4% | 359 |
+| Two conv + pooling blocks, dense head ([notebook](lab/cnn/CNN.ipynb)) | 98.9% | 111 |
 
-| File | Theme |
-| ------ | -------- |
-| [main.pdf](pdf/main.pdf) | Full picture — neurons to the training loop |
-| [mnist.pdf](pdf/mnist.pdf) | Dense networks on MNIST |
-| [CNN.pdf](pdf/CNN.pdf) | Understanding convolutions |
-
----
-
-## Lab — Go further
-
-Where the course leaves off, the Lab begins. Case studies, scripts, experiments — room to breathe, break things, and learn by doing.
-
-👉 **[Enter the Lab](lab/README.md)**
-
-| Project | What's inside |
-| ------- | --------------- |
-| [**MNIST Case Study**](lab/mnist/) | Full MLP pipeline — normalization, training curves, evaluation |
-| [**CNN Case Study**](lab/cnn/) | Convolutions on MNIST — filters, pooling, architecture |
-
----
-
-## Quickstart
+## Reproduce
 
 ```bash
 git clone https://github.com/Pchambet/Deep-Learning-from-Scratch.git
 cd Deep-Learning-from-Scratch
-python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-jupyter lab notebooks/birth_of_a_neuron.ipynb
+make setup     # uv sync --locked: Python 3.12 environment from uv.lock
+make check     # ruff, 37 tests including gradient checks, smoke test, Episode V demo (~20 s)
+make figures   # the experiments above, deterministic (~5 min on a laptop CPU)
+make latex     # rebuild every PDF from LaTeX (needs latexmk + TeX Live, ~1 min)
 ```
 
-### Python compatibility
+Notebooks: `uv run jupyter lab`, or open any Colab link above (no install needed).
+Keras baselines: `make lab` (installs TensorFlow, downloads MNIST). The checked-out files take
+35 MB; the environment without TensorFlow about 450 MB.
 
-- **Core notebooks and scripts:** Python **3.10+**
-- **TensorFlow notebooks/scripts (MNIST/CNN):** Python **3.10–3.12** recommended
-- If you are on macOS Apple Silicon, install from `requirements.txt` (includes `tensorflow-macos` + `tensorflow-metal` markers)
+## Repository layout
 
-### Quality checks
-
-```bash
-make quality          # compile + pytest + smoke test
-make test             # run pytest (utilities, two_layer, birth_of_a_neuron)
-make precommit        # run formatting/lint hooks
-make episode5-demo    # run Episode V demo (make_circles)
+```text
+notebooks/   course notebooks 01-10 + birth_of_a_neuron.py (Episode III functions)
+src/         deep_network.py, two_layer_network.py, gradient_check.py, utilities.py
+tests/       pytest: shapes, gradient checks, cross-episode agreement, known boundaries
+scripts/     make_figures.py (README experiments), smoke_test.py, episode_05_demo.py
+docs/        figures/*.png and results.json written by make figures
+pdf/         published guides (Episodes I-VII, long guide, MNIST, CNN)
+latex/       LaTeX sources of every guide except Episodes I-III
+lab/         Keras baselines on MNIST (dense, CNN)
+data/        64x64 cat/dog HDF5 files (1,000 train / 200 test), see data/README.md
+assets/      images used by the guides and notebooks
 ```
 
-Optional one-time setup:
+## Methodology notes and limitations
 
-```bash
-pip install pre-commit
-pre-commit install
-```
+- **Spiral experiments** use one fixed 700/300 split; seeds change the initial weights only.
+  Learning rate (0.5) and epochs (5,000) are the same for every architecture and were not tuned
+  per model, so the dip of the 64-unit layer may reflect optimisation rather than capacity.
+- **Cat/dog test set**: 200 images, so any accuracy carries about ±7 points of sampling error.
+  The figure reports the last epoch; the best test accuracy seen during training (60.5%) is not
+  reported as a result because picking it would use the test set for model selection.
+- **No validation set, no regularisation, full-batch gradient descent.** These are teaching
+  networks: the point is to see each mechanism, not to reach the state of the art.
+- The **Keras MNIST dense baseline** (96.4%) is the saved output of its notebook and was not
+  re-run for this version; the CNN notebook was executed for it. Notebooks 05 and 06 were
+  re-executed; the other notebooks keep the outputs of earlier runs.
+- The **cat/dog images** are a small teaching set whose original source and licence are not
+  recorded in this repository (see [`data/README.md`](data/README.md)).
+- The **LaTeX sources of Episodes I–III** are not in the repository; those three PDFs are
+  published as-is.
 
-**No install needed:** [Colab — birth_of_a_neuron](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/notebooks/birth_of_a_neuron.ipynb)
+## References
+
+- I. Goodfellow, Y. Bengio, A. Courville, *Deep Learning*, MIT Press, 2016, ch. 6
+  (feed-forward networks and back-propagation).
+- X. Glorot, Y. Bengio, "Understanding the difficulty of training deep feedforward neural
+  networks", AISTATS 2010 (the 1/√fan-in initialisation used here).
+- Y. LeCun, L. Bottou, Y. Bengio, P. Haffner, "Gradient-based learning applied to document
+  recognition", Proc. IEEE, 1998 (MNIST, convolutional networks).
+- Stanford CS231n course notes, "Gradient checks" (centred differences, relative error).
 
 ---
 
-## Repository structure
-
-```
-Deep-Learning-from-Scratch/
-├── notebooks/           # Course — birth_of_a_neuron, 01, 02, 04–08, 11, 12
-├── tests/               # pytest — utilities, two_layer_network, birth_of_a_neuron
-├── pdf/                 # Built guides (Ep. I–VII, main, mnist, CNN)
-├── latex/               # LaTeX sources — episode_04–07, main, mnist, cnn
-├── lab/                 # Lab — case studies
-│   ├── mnist/           # MNIST MLP (notebook + train_mlp.py)
-│   └── cnn/             # CNN (notebook + train_cnn.py)
-├── src/                 # utilities.py, two_layer_network.py
-├── data/                # trainset.hdf5, testset.hdf5 (cats vs dogs)
-├── assets/              # Figures, banners, photos
-├── Makefile             # make latex → build all PDFs
-├── requirements.txt
-└── README.md
-```
-
----
-
-## Philosophy
-
-> "Learning isn't remembering — it's rebuilding."
-
-No black boxes. Every weight, every gradient, every update — traced and understood. That's the point.
-
----
-
-## For recruiters
-
-**In five minutes**, this repo shows that I:
-- Understand the math behind neural networks
-- Implement and debug deep learning models end-to-end
-- Communicate complex ideas clearly and visually
-- Learn independently, structure my work, and deliver clean results
-
-**Suggested entry points:**
-- [birth_of_a_neuron.ipynb](notebooks/birth_of_a_neuron.ipynb) — clarity
-- [02_gradients_single_neuron.ipynb](notebooks/02_gradients_single_neuron.ipynb) — theory
-- [11_mnist_mlp_baseline.ipynb](notebooks/11_mnist_mlp_baseline.ipynb) — application
-- [12_mnist_cnn_baseline.ipynb](notebooks/12_mnist_cnn_baseline.ipynb) — maturity
-
----
-
-## Contribute / Connect
-
-Found an error or an idea worth exploring? Open an issue or a PR.
-Learning in public too? Let's connect.
-
-<p align="center">
-  <a href="https://www.linkedin.com/in/pierre-chambet/">
-    <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-blue?style=flat-square&logo=linkedin" alt="LinkedIn">
-  </a>
-  <a href="https://github.com/Pchambet">
-    <img src="https://img.shields.io/badge/Explore%20more%20projects-black?style=flat-square&logo=github" alt="GitHub">
-  </a>
-</p>
-
----
-
-<p align="center"><i>
-Deep Learning from Scratch — built with patience, mathematics, and curiosity.<br>
-Part of WIL™ — Wide-Range Ideas Laboratory · © 2026 Pierre Chambet
-</i></p>
+Built by [Pierre Chambet](https://github.com/Pchambet) — decision science for operations under uncertainty.
