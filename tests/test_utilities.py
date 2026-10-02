@@ -1,8 +1,8 @@
-"""Tests for src/utilities.py: the cat/dog loader and its synthetic fallback."""
+"""Tests for src/utilities.py: the cat/dog loader."""
 
 import numpy as np
+import pytest
 
-from src import utilities
 from src.utilities import load_data
 
 
@@ -24,10 +24,6 @@ def test_pixels_are_8_bit_grayscale():
         assert X.max() > 200  # real images use the full range, not a [0, 1] rescale
 
 
-def test_fallback_when_files_are_missing(monkeypatch):
-    monkeypatch.setattr(utilities.os.path, "isfile", lambda _: False)
-    X_train, y_train, X_test, y_test = load_data()
-    assert X_train.shape == (1000, 64, 64) and X_test.shape == (200, 64, 64)
-    assert set(np.unique(y_train)) <= {0.0, 1.0} and set(np.unique(y_test)) <= {0.0, 1.0}
-    # Deterministic: a second call returns the same synthetic data.
-    np.testing.assert_array_equal(load_data()[0], X_train)
+def test_missing_files_raise_instead_of_returning_placeholder_data(tmp_path):
+    with pytest.raises(FileNotFoundError, match="trainset.hdf5"):
+        load_data(tmp_path)

@@ -9,9 +9,8 @@ Used by Episodes IV–VII and by `scripts/make_figures.py`. Load them with
 `src.utilities.load_data()`; the class balance is checked in `tests/test_utilities.py`.
 
 The files are small (4.9 MB) and committed, so a clone is self-contained. On Colab the
-notebooks download them from this folder if they are missing. If neither is possible,
-`load_data()` falls back to random synthetic arrays of the same shape so that code still
-runs; accuracies on that fallback are meaningless (chance level by construction).
+notebooks download them from this folder if they are missing. `load_data()` raises
+`FileNotFoundError` when a file is absent, so no script ever reports results on placeholder data.
 
 Origin: a small teaching set of photographs reduced to 64×64 grayscale. Its original
 source and licence are not recorded in this repository; it is used here for teaching only.

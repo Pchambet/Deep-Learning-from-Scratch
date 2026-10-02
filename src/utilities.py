@@ -1,44 +1,30 @@
-# src/utilities.py
-import os
+"""Loader for the 64x64 grayscale cat/dog images of Episodes IV-VII (see data/README.md)."""
+
+from __future__ import annotations
+
+from pathlib import Path
 
 import h5py
 import numpy as np
 
+DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 
-def _synthetic_data(seed: int = 42):
+
+def load_data(
+    data_dir: Path = DATA_DIR,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Return ``X_train, y_train, X_test, y_test`` from ``trainset.hdf5`` and ``testset.hdf5``.
+
+    Images are ``uint8`` arrays of shape ``(n, 64, 64)``; labels have shape ``(n, 1)``.
+    Raises ``FileNotFoundError`` when a file is missing, so no result is ever computed on
+    placeholder data.
     """
-    Generate synthetic train/test data (same format as cats vs dogs HDF5).
-    Used when HDF5 files are absent (e.g. fresh clone, CI).
-    """
-    rng = np.random.default_rng(seed)
-    # trainset: 1000 images 64×64, labels 0/1
-    X_train = rng.integers(0, 256, (1000, 64, 64), dtype=np.uint8)
-    y_train = (rng.random((1000, 1)) > 0.5).astype(np.float64)
-    # testset: 200 images 64×64
-    X_test = rng.integers(0, 256, (200, 64, 64), dtype=np.uint8)
-    y_test = (rng.random((200, 1)) > 0.5).astype(np.float64)
+    train_path, test_path = data_dir / "trainset.hdf5", data_dir / "testset.hdf5"
+    for path in (train_path, test_path):
+        if not path.is_file():
+            raise FileNotFoundError(f"{path} not found: the cat/dog HDF5 files ship in data/")
+    with h5py.File(train_path, "r") as train:
+        X_train, y_train = np.array(train["X_train"]), np.array(train["Y_train"])
+    with h5py.File(test_path, "r") as test:
+        X_test, y_test = np.array(test["X_test"]), np.array(test["Y_test"])
     return X_train, y_train, X_test, y_test
-
-
-def load_data():
-    """
-    Load training and test datasets stored in HDF5 files.
-    Falls back to synthetic data if files are absent (CI, fresh clone).
-    Returns:
-        X_train, y_train, X_test, y_test : np.ndarray
-    """
-    base_dir = os.path.dirname(os.path.dirname(__file__))
-    data_dir = os.path.join(base_dir, "data")
-    train_path = os.path.join(data_dir, "trainset.hdf5")
-    test_path = os.path.join(data_dir, "testset.hdf5")
-
-    if os.path.isfile(train_path) and os.path.isfile(test_path):
-        with h5py.File(train_path, "r") as train_dataset:
-            X_train = np.array(train_dataset["X_train"][:])
-            y_train = np.array(train_dataset["Y_train"][:])
-        with h5py.File(test_path, "r") as test_dataset:
-            X_test = np.array(test_dataset["X_test"][:])
-            y_test = np.array(test_dataset["Y_test"][:])
-        return X_train, y_train, X_test, y_test
-
-    return _synthetic_data()
