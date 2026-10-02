@@ -7,7 +7,9 @@ tanh hidden units, sigmoid output, seeded):
 1. Two interleaved spirals, the textbook problem no linear model can solve: decision
    boundaries of a single neuron, one hidden layer and three hidden layers.
 2. A capacity sweep on the same spirals, five seeds per architecture: does accuracy
-   come from depth or simply from more parameters?
+   come from depth or simply from more parameters? Single layers go up to 256 units
+   (1,025 parameters) so that both families cover the same parameter range, and the
+   widest ones are also trained four times longer to separate capacity from training time.
 3. The 64x64 cat/dog photos of Episodes IV-VII: train vs test accuracy of a deep
    fully connected network, i.e. what the series' networks can and cannot do on images.
 
@@ -20,6 +22,7 @@ from __future__ import annotations
 import json
 import sys
 import time
+from functools import cache
 from itertools import pairwise
 from pathlib import Path
 
@@ -58,8 +61,9 @@ HERO_MODELS = {
     "1 hidden layer (16)": [2, 16, 1],
     "3 hidden layers (16-16-16)": [2, 16, 16, 16, 1],
 }
-WIDTHS = (4, 8, 16, 32, 64)  # one hidden layer of this many units
+WIDTHS = (4, 8, 16, 32, 64, 128, 256)  # one hidden layer of this many units
 DEPTHS = (1, 2, 3, 4)  # this many hidden layers of 16 units
+LONG_WIDTHS, LONG_EPOCHS = (128, 256), 20_000  # wide single layers, trained 4x longer (seed 0)
 IMAGE_DIMS, IMAGE_LR, IMAGE_EPOCHS = [4096, 32, 32, 1], 0.02, 3000
 
 plt.rcParams.update(
@@ -109,11 +113,9 @@ def binomial_ci95(p: float, n: int) -> float:
     return 1.96 * float(np.sqrt(p * (1 - p) / n))
 
 
-def train_spirals(dimensions: list[int], seed: int, data):
+def train_spirals(dimensions: list[int], seed: int, data, epochs: int = SPIRAL_EPOCHS):
     X_train, y_train, X_test, y_test = data
-    run = fit(
-        X_train, y_train, dimensions, learning_rate=SPIRAL_LR, epochs=SPIRAL_EPOCHS, seed=seed
-    )
+    run = fit(X_train, y_train, dimensions, learning_rate=SPIRAL_LR, epochs=epochs, seed=seed)
     return run.parameters, {
         "train_accuracy": accuracy(y_train, predict(X_train, run.parameters)),
         "test_accuracy": accuracy(y_test, predict(X_test, run.parameters)),
@@ -174,16 +176,23 @@ def hero_figure(data, results: dict) -> None:
 
 
 def capacity_sweep(data, results: dict) -> None:
+    @cache
+    def seed_scores(dims: tuple[int, ...]) -> tuple[float, ...]:
+        # [2, 16, 1] belongs to both families: train it once.
+        return tuple(train_spirals(list(dims), seed, data)[1]["test_accuracy"] for seed in SEEDS)
+
+    wide_label = f"wider: 1 hidden layer of {WIDTHS[0]}-{WIDTHS[-1]} units"
+    deep_label = f"deeper: {DEPTHS[0]}-{DEPTHS[-1]} hidden layers of 16 units"
     families = {
-        "wider: 1 hidden layer of 4-64 units": [[2, w, 1] for w in WIDTHS],
-        "deeper: 1-4 hidden layers of 16 units": [[2, *([16] * d), 1] for d in DEPTHS],
+        wide_label: [[2, w, 1] for w in WIDTHS],
+        deep_label: [[2, *([16] * d), 1] for d in DEPTHS],
     }
     sweep = {}
-    fig, ax = plt.subplots(figsize=(8, 4.6))
+    fig, ax = plt.subplots(figsize=(9.5, 5))
     for (family, architectures), color in zip(families.items(), (AMBER, TEAL), strict=True):
         rows = []
         for dims in architectures:
-            scores = [train_spirals(dims, seed, data)[1]["test_accuracy"] for seed in SEEDS]
+            scores = seed_scores(tuple(dims))
             rows.append(
                 {
                     "dimensions": dims,
@@ -213,11 +222,35 @@ def capacity_sweep(data, results: dict) -> None:
         ax.annotate(
             family,
             (p[-1], mean[-1]),
-            xytext=(8, -4 if color == TEAL else -14),
+            xytext=(8, -22 if color == TEAL else -14),
             textcoords="offset points",
             color=INK,
             fontsize=9,
         )
+    long_runs = []
+    for width in LONG_WIDTHS:
+        dims = [2, width, 1]
+        scores = train_spirals(dims, seed=0, data=data, epochs=LONG_EPOCHS)[1]
+        long_runs.append({"dimensions": dims, "parameters": n_parameters(dims), **scores})
+        print(f"  {dims}, {LONG_EPOCHS:,} epochs: test accuracy {scores['test_accuracy']:.3f}")
+    ax.scatter(
+        [r["parameters"] for r in long_runs],
+        [r["test_accuracy"] for r in long_runs],
+        s=46,
+        facecolors="white",
+        edgecolors=AMBER,
+        linewidths=1.8,
+        zorder=3,
+    )
+    ax.annotate(
+        f"single layers, {LONG_EPOCHS:,} epochs (seed 0)",
+        (long_runs[0]["parameters"], long_runs[0]["test_accuracy"]),
+        xytext=(-8, 6),
+        textcoords="offset points",
+        ha="right",
+        color=INK,
+        fontsize=9,
+    )
     ax.set_xscale("log")
     ax.set_xlabel("Trainable parameters (log scale)")
     ax.set_ylabel("Held-out accuracy (mean, min-max over 5 seeds)")
@@ -225,21 +258,32 @@ def capacity_sweep(data, results: dict) -> None:
     ax.set_xlim(right=ax.get_xlim()[1] * 6)
     ax.axhline(0.5, color=SLATE, linewidth=1, linestyle=":")
     ax.text(ax.get_xlim()[0] * 1.1, 0.51, "chance", color=SLATE, fontsize=8.5)
-    deep = sweep["deeper: 1-4 hidden layers of 16 units"]
-    wide = sweep["wider: 1 hidden layer of 4-64 units"]
-    best_wide = max(wide, key=lambda r: r["test_accuracy_mean"])
-    two_layers = deep[1]
+    best_wide = max(sweep[wide_label], key=lambda r: r["test_accuracy_mean"])
+    two_layers = sweep[deep_label][1]
+    best_long = max(long_runs, key=lambda r: r["test_accuracy"])
     ax.set_title(
-        f"Extra width plateaus at {best_wide['test_accuracy_mean']:.1%}; a second 16-unit "
-        f"layer reaches {two_layers['test_accuracy_mean']:.1%}",
+        f"{SPIRAL_EPOCHS:,} epochs: two 16-unit layers reach "
+        f"{two_layers['test_accuracy_mean']:.1%}, the best single layer "
+        f"{best_wide['test_accuracy_mean']:.1%}.\n{LONG_EPOCHS:,} epochs: one layer of "
+        f"{best_long['dimensions'][1]} units reaches {best_long['test_accuracy']:.1%}. "
+        "Depth buys speed here, not capacity",
         loc="left",
-        fontsize=11,
+        fontsize=10.5,
         fontweight="bold",
     )
-    fig.tight_layout()
+    fig.text(
+        0.01,
+        0.01,
+        f"Filled: mean and min-max over {len(SEEDS)} seeds. Open: one seed. Full-batch "
+        f"gradient descent, learning rate {SPIRAL_LR} for every model (not tuned).",
+        fontsize=8.5,
+        color=SLATE,
+    )
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
     fig.savefig(FIGURES / "capacity_sweep.png", dpi=200)
     plt.close(fig)
     results["spirals_capacity_sweep"] = sweep
+    results["spirals_wide_long_training"] = {"epochs": LONG_EPOCHS, "seed": 0, "runs": long_runs}
 
 
 def cats_dogs(results: dict) -> None:
@@ -264,7 +308,10 @@ def cats_dogs(results: dict) -> None:
     final_test = accuracy(y_test, predict(X_test, run.parameters))
     n_test = y_test.shape[1]
 
-    fig, ax = plt.subplots(figsize=(8, 4.4))
+    final_train_loss = log_loss(y_train, predict_proba(X_train, run.parameters))
+    final_test_loss = log_loss(y_test, predict_proba(X_test, run.parameters))
+
+    fig, (ax, ax_loss) = plt.subplots(1, 2, figsize=(12, 4.4))
     ax.plot(epochs, run.train_accuracy, color=AMBER, linewidth=2)
     ax.plot(epochs, run.val_accuracy, color=TEAL, linewidth=2)
     ax.axhline(0.5, color=SLATE, linewidth=1, linestyle=":")
@@ -276,12 +323,26 @@ def cats_dogs(results: dict) -> None:
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(1.0, decimals=0))
     ax.set_xlabel("Epoch (full-batch gradient descent)")
     ax.set_ylabel("Accuracy")
-    ax.set_title(
-        f"Cat/dog photos: {final_train:.0%} right on training images, "
-        f"{final_test:.0%} on unseen ones",
-        loc="left",
-        fontsize=11,
+    ax.set_title("Accuracy", loc="left", fontsize=10.5)
+
+    ax_loss.plot(epochs, run.train_loss, color=AMBER, linewidth=2)
+    ax_loss.plot(epochs, run.val_loss, color=TEAL, linewidth=2)
+    ax_loss.text(epochs[-1], final_train_loss, f"  train {final_train_loss:.2f}", color=INK)
+    ax_loss.text(epochs[-1], final_test_loss, f"  test {final_test_loss:.2f}", color=INK)
+    ax_loss.set_xlim(0, epochs[-1] * 1.18)
+    ax_loss.set_ylim(bottom=0)
+    ax_loss.set_xlabel("Epoch (full-batch gradient descent)")
+    ax_loss.set_ylabel("Log-loss")
+    ax_loss.set_title("Log-loss", loc="left", fontsize=10.5)
+
+    fig.suptitle(
+        f"Cat/dog photos: {final_train:.0%} right on training images, {final_test:.0%} on "
+        f"unseen ones; test loss ends {final_test_loss / final_train_loss:.0f}x the training loss",
+        x=0.01,
+        ha="left",
+        fontsize=12,
         fontweight="bold",
+        color=INK,
     )
     fig.text(
         0.01,
@@ -292,7 +353,7 @@ def cats_dogs(results: dict) -> None:
         fontsize=8.5,
         color=SLATE,
     )
-    fig.tight_layout(rect=(0, 0.04, 1, 1))
+    fig.tight_layout(rect=(0, 0.04, 1, 0.94))
     fig.savefig(FIGURES / "cats_dogs_overfitting.png", dpi=200)
     plt.close(fig)
     results["cats_dogs"] = {
@@ -303,8 +364,8 @@ def cats_dogs(results: dict) -> None:
         "final_train_accuracy": final_train,
         "final_test_accuracy": final_test,
         "best_test_accuracy_during_training": max(run.val_accuracy),
-        "final_train_loss": log_loss(y_train, predict_proba(X_train, run.parameters)),
-        "final_test_loss": log_loss(y_test, predict_proba(X_test, run.parameters)),
+        "final_train_loss": final_train_loss,
+        "final_test_loss": final_test_loss,
         "test_accuracy_ci95_half_width": binomial_ci95(final_test, n_test),
     }
 

@@ -43,7 +43,7 @@
     }
   },
   "spirals_capacity_sweep": {
-    "wider: 1 hidden layer of 4-64 units": [
+    "wider: 1 hidden layer of 4-256 units": [
       {
         "dimensions": [
           2,
@@ -98,6 +98,28 @@
         "test_accuracy_mean": 0.9253333333333333,
         "test_accuracy_min": 0.8666666666666667,
         "test_accuracy_max": 0.9466666666666667
+      },
+      {
+        "dimensions": [
+          2,
+          128,
+          1
+        ],
+        "parameters": 513,
+        "test_accuracy_mean": 0.7793333333333334,
+        "test_accuracy_min": 0.7566666666666667,
+        "test_accuracy_max": 0.81
+      },
+      {
+        "dimensions": [
+          2,
+          256,
+          1
+        ],
+        "parameters": 1025,
+        "test_accuracy_mean": 0.7766666666666667,
+        "test_accuracy_min": 0.7566666666666667,
+        "test_accuracy_max": 0.7933333333333333
       }
     ],
     "deeper: 1-4 hidden layers of 16 units": [
@@ -150,6 +172,32 @@
         "test_accuracy_mean": 0.9953333333333333,
         "test_accuracy_min": 0.99,
         "test_accuracy_max": 1.0
+      }
+    ]
+  },
+  "spirals_wide_long_training": {
+    "epochs": 20000,
+    "seed": 0,
+    "runs": [
+      {
+        "dimensions": [
+          2,
+          128,
+          1
+        ],
+        "parameters": 513,
+        "train_accuracy": 1.0,
+        "test_accuracy": 1.0
+      },
+      {
+        "dimensions": [
+          2,
+          256,
+          1
+        ],
+        "parameters": 1025,
+        "train_accuracy": 1.0,
+        "test_accuracy": 0.99
       }
     ]
   },
