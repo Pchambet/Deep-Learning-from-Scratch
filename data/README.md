@@ -12,5 +12,6 @@ The files are small (4.9 MB) and committed, so a clone is self-contained. On Col
 notebooks download them from this folder if they are missing. `load_data()` raises
 `FileNotFoundError` when a file is absent, so no script ever reports results on placeholder data.
 
-Origin: a small teaching set of photographs reduced to 64×64 grayscale. Its original
-source and licence are not recorded in this repository; it is used here for teaching only.
+Origin: the teaching set of Guillaume Saint-Cirgue's French deep-learning course
+([Machine Learnia](https://www.youtube.com/@MachineLearnia)), photographs reduced to 64×64
+grayscale. It is used here for teaching only.

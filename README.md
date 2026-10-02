@@ -166,8 +166,9 @@ assets/      images used by the guides and notebooks
 - The **Keras MNIST dense baseline** (96.4%) is the saved output of its notebook and was not
   re-run for this version; the CNN notebook was executed for it. Notebooks 05 and 06 were
   re-executed; the other notebooks keep the outputs of earlier runs.
-- The **cat/dog images** are a small teaching set whose original source and licence are not
-  recorded in this repository (see [`data/README.md`](data/README.md)).
+- The **cat/dog images** and the `load_data` helper come from Guillaume Saint-Cirgue's French
+  deep-learning course ([Machine Learnia](https://www.youtube.com/@MachineLearnia)), from which
+  this series learned; they are used here for teaching (see [`data/README.md`](data/README.md)).
 - The **LaTeX sources of Episodes I–III** are not in the repository; those three PDFs are
   published as-is.
 
