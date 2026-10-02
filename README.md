@@ -7,7 +7,7 @@ every gradient derived on paper, coded by hand, and checked against finite diffe
 ![Python 3.12](https://img.shields.io/badge/python-3.12-0d9488)
 [![License: MIT](https://img.shields.io/badge/license-MIT-64748b)](LICENSE)
 
-![Decision boundaries on two interleaved spirals: a single neuron reaches 63.0% held-out accuracy, one hidden layer 89.3%, three hidden layers 99.7%](docs/figures/hero_spirals.png)
+![Decision boundaries on two interleaved spirals, one run each (seed 0): a single neuron reaches 63.0% held-out accuracy, one hidden layer 89.3%, three hidden layers 99.7%](docs/figures/hero_spirals.png)
 
 ## TL;DR
 
@@ -17,7 +17,9 @@ every gradient derived on paper, coded by hand, and checked against finite diffe
   the L-layer code with the single neuron of Episode III and the two-layer network of Episode VI.
 - **Hidden layers bend the boundary.** On two interleaved spirals (300 held-out points), the
   same 5,000 epochs of gradient descent take accuracy from 63.0% for a single neuron to 89.3%
-  with one hidden layer of 16 units (65 parameters) and 99.7% with three (609 parameters).
+  with one hidden layer of 16 units (65 parameters) and 99.7% with three (609 parameters) in
+  the seed-0 runs of the figure; over five seeds those two networks average 89.1% (82.7–95.0)
+  and 99.4% (99.0–99.7).
 - **Depth buys training speed here, not capacity.** In those 5,000 epochs two layers of 16
   units reach 99.1% over five seeds (337 parameters, worst seed 98.7%), while no single hidden
   layer beats 95.7% (32 units); at 128 and 256 units, with as many parameters as the deep
