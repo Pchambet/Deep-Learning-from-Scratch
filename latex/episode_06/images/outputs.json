@@ -1,0 +1,34 @@
+{
+  "toy_circles": {
+    "final_loss": 0.3157463268666661,
+    "final_accuracy": 1.0,
+    "epochs": 1000,
+    "n1": 32
+  },
+  "neurons_1": {
+    "accuracy": 0.57
+  },
+  "neurons_2": {
+    "accuracy": 0.87
+  },
+  "neurons_4": {
+    "accuracy": 0.51
+  },
+  "neurons_8": {
+    "accuracy": 0.99
+  },
+  "neurons_16": {
+    "accuracy": 0.99
+  },
+  "neurons_32": {
+    "accuracy": 1.0
+  },
+  "cats_dogs": {
+    "final_train_accuracy": 0.974,
+    "final_test_accuracy": 0.52,
+    "final_train_loss": 0.10160258029221413,
+    "final_test_loss": 1.6667724744805912,
+    "epochs": 10000,
+    "n1": 64
+  }
+}

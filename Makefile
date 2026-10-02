@@ -1,79 +1,63 @@
-# Deep Learning from Scratch — unified build
-# Prefer venv if present (has pytest, deps)
-PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
+.DEFAULT_GOAL := help
+.PHONY: help setup test lint format smoke demo figures notebooks check latex lab clean
 
-.PHONY: latex latex-main latex-mnist latex-cnn latex-episode04 latex-episode05 latex-episode06 latex-episode07 copy-pdf smoke episode5-demo test quality precommit clean
+# Reproducible PDFs: pdfTeX stamps this fixed date (2026-01-01 UTC) instead of
+# "now", so rebuilding unchanged sources yields byte-identical files.
+export SOURCE_DATE_EPOCH := 1767225600
+export FORCE_SOURCE_DATE := 1
 
-# Build all LaTeX and copy to pdf/
-latex: latex-main latex-mnist latex-cnn latex-episode04 latex-episode05 latex-episode06 latex-episode07
-	@$(MAKE) copy-pdf
+# LaTeX guide directory -> published PDF name in pdf/
+GUIDES := main:main mnist:mnist cnn:CNN \
+	episode_04:All\ Eyes\ on\ You episode_05:The\ Rise\ of\ Intelligence \
+	episode_06:Alive episode_07:Horizon\ of\ Depth
 
-latex-main:
-	@echo "Building main.pdf..."
-	@cd latex/main && $(MAKE) && cd ../..
+help:  ## List the targets
+	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  %-10s %s\n", $$1, $$2}'
 
-latex-mnist:
-	@echo "Building mnist.pdf..."
-	@cd latex/mnist && $(MAKE) && cd ../..
+setup:  ## Create the virtual environment from uv.lock
+	uv sync --locked
 
-latex-cnn:
-	@echo "Building CNN.pdf..."
-	@cd latex/cnn && $(MAKE) && cd ../..
+test:  ## Unit tests, gradient checks and convergence tests
+	uv run pytest -q
 
-latex-episode04:
-	@echo "Building episode_04.pdf..."
-	@cd latex/episode_04 && $(MAKE) && cd ../..
+lint:  ## Ruff lint and format check
+	uv run ruff check .
+	uv run ruff format --check .
 
-latex-episode05:
-	@echo "Building episode_05.pdf..."
-	@cd latex/episode_05 && $(MAKE) && cd ../..
+format:  ## Apply ruff fixes and formatting
+	uv run ruff check --fix .
+	uv run ruff format .
 
-latex-episode06:
-	@echo "Building episode_06.pdf..."
-	@cd latex/episode_06 && $(MAKE) && cd ../..
+smoke:  ## Train the single neuron for 20 steps on the cat/dog images
+	uv run python scripts/smoke_test.py
 
-latex-episode07:
-	@echo "Building episode_07.pdf..."
-	@cd latex/episode_07 && $(MAKE) && cd ../..
+demo:  ## Episode V: two-layer network on concentric circles (figures in outputs/)
+	uv run python scripts/episode_05_demo.py
 
-copy-pdf:
-	@echo "Copying PDFs to pdf/..."
-	@test -f latex/main/main.pdf && cp latex/main/main.pdf pdf/ || true
-	@test -f latex/mnist/dist/mnist.pdf && cp latex/mnist/dist/mnist.pdf pdf/ || test -f latex/mnist/mnist.pdf && cp latex/mnist/mnist.pdf pdf/ || true
-	@test -f latex/cnn/dist/CNN.pdf && cp latex/cnn/dist/CNN.pdf pdf/ || test -f latex/cnn/CNN.pdf && cp latex/cnn/CNN.pdf pdf/ || true
-	@test -f latex/episode_04/episode_04.pdf && cp "latex/episode_04/episode_04.pdf" "pdf/All Eyes on You.pdf" || true
-	@test -f latex/episode_05/episode_05.pdf && cp "latex/episode_05/episode_05.pdf" "pdf/The Rise of Intelligence.pdf" || true
-	@test -f latex/episode_06/episode_06.pdf && cp "latex/episode_06/episode_06.pdf" "pdf/Alive.pdf" || true
-	@test -f latex/episode_07/episode_07.pdf && cp "latex/episode_07/episode_07.pdf" "pdf/Horizon of Depth.pdf" || true
-	@echo "Done."
+figures:  ## Regenerate docs/figures/*.png and docs/results.json (~2 min)
+	uv run python scripts/make_figures.py
 
-smoke:
-	@echo "Running notebook smoke test..."
-	@$(PYTHON) scripts/smoke_test.py
+notebooks:  ## Re-execute the course notebooks in place
+	cd notebooks && for nb in 0*.ipynb birth_of_a_neuron.ipynb; do \
+		uv run jupyter nbconvert --to notebook --execute --inplace "$$nb" || exit 1; \
+	done
 
-episode5-demo:
-	@echo "Running Episode 5 demo..."
-	@$(PYTHON) scripts/episode_05_demo.py
+check: lint test smoke demo  ## Everything CI runs
 
-test:
-	@echo "Running pytest..."
-	@$(PYTHON) -m pytest tests/ -v
+latex:  ## Build every LaTeX guide and copy it to pdf/ (needs latexmk + TeX Live)
+	@for entry in $(GUIDES); do \
+		dir=$${entry%%:*}; name=$${entry#*:}; tex=$$(ls latex/$$dir/*.tex); \
+		echo "Building $$tex -> pdf/$$name.pdf"; \
+		(cd latex/$$dir && latexmk -pdf -interaction=nonstopmode -halt-on-error -quiet $$(basename $$tex) >/dev/null) \
+			|| { echo "LaTeX failed: see latex/$$dir/*.log"; exit 1; }; \
+		cp "$${tex%.tex}.pdf" "pdf/$$name.pdf"; \
+	done
 
-quality:
-	@echo "Compiling Python sources..."
-	@$(PYTHON) -m compileall src lab scripts notebooks/birth_of_a_neuron.py
-	@$(MAKE) test
-	@$(MAKE) smoke
+lab:  ## Keras baselines on MNIST (installs TensorFlow, downloads MNIST)
+	uv sync --group lab
+	cd lab/mnist && uv run --group lab python train_mlp.py
+	cd lab/cnn && uv run --group lab python train_cnn.py
 
-precommit:
-	@echo "Running pre-commit on all files..."
-	@pre-commit run --all-files
-
-clean:
-	@cd latex/main && make clean && cd ../..
-	@cd latex/mnist && make clean && cd ../..
-	@cd latex/cnn && make clean && cd ../..
-	@cd latex/episode_04 && make clean && cd ../..
-	@cd latex/episode_05 && make clean && cd ../..
-	@cd latex/episode_06 && make clean && cd ../..
-	@cd latex/episode_07 && make clean && cd ../..
+clean:  ## Remove build artefacts and caches
+	cd latex && for dir in */; do (cd $$dir && latexmk -c >/dev/null 2>&1); done; true
+	rm -rf outputs lab/*/outputs .pytest_cache .ruff_cache

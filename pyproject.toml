@@ -37,7 +37,7 @@ package = false
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-extend-exclude = ["*.ipynb", "latex"]
+extend-exclude = ["*.ipynb"]
 
 [tool.ruff.lint]
 extend-select = ["I", "B", "UP", "SIM"]
