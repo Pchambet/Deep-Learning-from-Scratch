@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help setup test lint format smoke demo figures notebooks check latex lab clean
+.PHONY: help setup test lint format smoke demo figures check latex lab clean
 
 # Reproducible PDFs: pdfTeX stamps this fixed date (2026-01-01 UTC) instead of
 # "now", so rebuilding unchanged sources yields byte-identical files.
@@ -34,13 +34,8 @@ smoke:  ## Train the single neuron for 20 steps on the cat/dog images
 demo:  ## Episode V: two-layer network on concentric circles (figures in outputs/)
 	uv run python scripts/episode_05_demo.py
 
-figures:  ## Regenerate docs/figures/*.png and docs/results.json (~2 min)
+figures:  ## Regenerate docs/figures/*.png and docs/results.json (~5 min)
 	uv run python scripts/make_figures.py
-
-notebooks:  ## Re-execute the course notebooks in place
-	cd notebooks && for nb in 0*.ipynb birth_of_a_neuron.ipynb; do \
-		uv run jupyter nbconvert --to notebook --execute --inplace "$$nb" || exit 1; \
-	done
 
 check: lint test smoke demo  ## Everything CI runs
 
