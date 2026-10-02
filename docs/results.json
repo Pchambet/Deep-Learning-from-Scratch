@@ -1,0 +1,173 @@
+{
+  "gradient_check_max_relative_error": {
+    "2-1 tanh": 1.8320075491461337e-09,
+    "2-1 sigmoid": 1.8320075491461337e-09,
+    "2-8-1 tanh": 5.660472761461004e-09,
+    "2-8-1 sigmoid": 2.0154072474359586e-08,
+    "2-8-8-1 tanh": 1.3797212882493881e-08,
+    "2-8-8-1 sigmoid": 1.0916967373189925e-07,
+    "2-8-8-8-1 tanh": 1.0504558277213896e-08,
+    "2-8-8-8-1 sigmoid": 3.112106160887022e-07
+  },
+  "spirals_hero": {
+    "Single neuron": {
+      "dimensions": [
+        2,
+        1
+      ],
+      "parameters": 3,
+      "train_accuracy": 0.5871428571428572,
+      "test_accuracy": 0.63
+    },
+    "1 hidden layer (16)": {
+      "dimensions": [
+        2,
+        16,
+        1
+      ],
+      "parameters": 65,
+      "train_accuracy": 0.8728571428571429,
+      "test_accuracy": 0.8933333333333333
+    },
+    "3 hidden layers (16-16-16)": {
+      "dimensions": [
+        2,
+        16,
+        16,
+        16,
+        1
+      ],
+      "parameters": 609,
+      "train_accuracy": 1.0,
+      "test_accuracy": 0.9966666666666667
+    }
+  },
+  "spirals_capacity_sweep": {
+    "wider: 1 hidden layer of 4-64 units": [
+      {
+        "dimensions": [
+          2,
+          4,
+          1
+        ],
+        "parameters": 17,
+        "test_accuracy_mean": 0.7566666666666666,
+        "test_accuracy_min": 0.75,
+        "test_accuracy_max": 0.7666666666666667
+      },
+      {
+        "dimensions": [
+          2,
+          8,
+          1
+        ],
+        "parameters": 33,
+        "test_accuracy_mean": 0.82,
+        "test_accuracy_min": 0.7466666666666667,
+        "test_accuracy_max": 0.86
+      },
+      {
+        "dimensions": [
+          2,
+          16,
+          1
+        ],
+        "parameters": 65,
+        "test_accuracy_mean": 0.8913333333333334,
+        "test_accuracy_min": 0.8266666666666667,
+        "test_accuracy_max": 0.95
+      },
+      {
+        "dimensions": [
+          2,
+          32,
+          1
+        ],
+        "parameters": 129,
+        "test_accuracy_mean": 0.9573333333333334,
+        "test_accuracy_min": 0.9333333333333333,
+        "test_accuracy_max": 0.9733333333333334
+      },
+      {
+        "dimensions": [
+          2,
+          64,
+          1
+        ],
+        "parameters": 257,
+        "test_accuracy_mean": 0.9253333333333333,
+        "test_accuracy_min": 0.8666666666666667,
+        "test_accuracy_max": 0.9466666666666667
+      }
+    ],
+    "deeper: 1-4 hidden layers of 16 units": [
+      {
+        "dimensions": [
+          2,
+          16,
+          1
+        ],
+        "parameters": 65,
+        "test_accuracy_mean": 0.8913333333333334,
+        "test_accuracy_min": 0.8266666666666667,
+        "test_accuracy_max": 0.95
+      },
+      {
+        "dimensions": [
+          2,
+          16,
+          16,
+          1
+        ],
+        "parameters": 337,
+        "test_accuracy_mean": 0.9906666666666666,
+        "test_accuracy_min": 0.9866666666666667,
+        "test_accuracy_max": 0.9933333333333333
+      },
+      {
+        "dimensions": [
+          2,
+          16,
+          16,
+          16,
+          1
+        ],
+        "parameters": 609,
+        "test_accuracy_mean": 0.994,
+        "test_accuracy_min": 0.99,
+        "test_accuracy_max": 0.9966666666666667
+      },
+      {
+        "dimensions": [
+          2,
+          16,
+          16,
+          16,
+          16,
+          1
+        ],
+        "parameters": 881,
+        "test_accuracy_mean": 0.9953333333333333,
+        "test_accuracy_min": 0.99,
+        "test_accuracy_max": 1.0
+      }
+    ]
+  },
+  "cats_dogs": {
+    "dimensions": [
+      4096,
+      32,
+      32,
+      1
+    ],
+    "parameters": 132193,
+    "epochs": 3000,
+    "learning_rate": 0.02,
+    "final_train_accuracy": 0.985,
+    "final_test_accuracy": 0.57,
+    "best_test_accuracy_during_training": 0.605,
+    "final_train_loss": 0.09267837833702056,
+    "final_test_loss": 1.0011507923554759,
+    "test_accuracy_ci95_half_width": 0.06861399857172004
+  }
+}
