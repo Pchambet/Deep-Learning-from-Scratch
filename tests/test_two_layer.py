@@ -104,4 +104,6 @@ class TestTwoLayerNetwork:
 
         for name in ("W1", "b1", "W2", "b2"):
             numeric = numerical_gradient(loss, params[name])
-            assert relative_error(grads[f"d{name}"], numeric) < 1e-7, name
+            # Deeper sigmoid stacks have tiny gradients, so float rounding alone reaches ~1e-7
+            # (it varies with the BLAS); a wrong gradient gives ~1e-2. 1e-6 stays conclusive.
+            assert relative_error(grads[f"d{name}"], numeric) < 1e-6, name

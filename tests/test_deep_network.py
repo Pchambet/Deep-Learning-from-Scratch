@@ -84,7 +84,9 @@ def test_backprop_matches_finite_differences(toy_batch, dimensions, hidden_activ
 
     for name, value in parameters.items():
         numeric = numerical_gradient(loss, value)
-        assert relative_error(analytic[f"d{name}"], numeric) < 1e-7, name
+        # Deeper sigmoid stacks have tiny gradients, so float rounding alone reaches ~1e-7
+        # (it varies with the BLAS); a wrong gradient gives ~1e-2. 1e-6 stays conclusive.
+        assert relative_error(analytic[f"d{name}"], numeric) < 1e-6, name
 
 
 def test_one_layer_network_is_the_episode_iii_neuron(toy_batch):
