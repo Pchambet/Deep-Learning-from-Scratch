@@ -15,18 +15,20 @@ every gradient derived on paper, coded by hand, and checked against finite diffe
   matches central finite differences to a relative error of at most 3.1 × 10⁻⁷ at depths 1 to 4,
   for tanh and sigmoid hidden units. CI re-checks it on every push, along with the agreement of
   the L-layer code with the single neuron of Episode III and the two-layer network of Episode VI.
-- **Depth is what bends the boundary.** On two interleaved spirals (300 held-out points), the
-  same gradient descent takes accuracy from 63.0% for a single neuron to 89.3% with one hidden
-  layer of 16 units and 99.7% with three.
-- **Width alone plateaus.** Over five seeds, the best single hidden layer reaches 95.7% (32
-  units, 129 parameters) and 64 units drop to 92.5%; two layers of 16 units reach 99.1%
-  (337 parameters, worst seed 98.7%).
+- **Hidden layers bend the boundary.** On two interleaved spirals (300 held-out points), the
+  same 5,000 epochs of gradient descent take accuracy from 63.0% for a single neuron to 89.3%
+  with one hidden layer of 16 units (65 parameters) and 99.7% with three (609 parameters).
+- **Depth buys training speed here, not capacity.** In those 5,000 epochs two layers of 16
+  units reach 99.1% over five seeds (337 parameters, worst seed 98.7%), while no single hidden
+  layer beats 95.7% (32 units); at 128 and 256 units, with as many parameters as the deep
+  models, it falls to about 78%. Trained four times longer, a single layer of 128 units reaches
+  100% (one seed): the wide layers had not finished learning, they were not too small.
 - **The honest limit.** On 64 × 64 cat/dog photos a fully connected 4096-32-32-1 network gets
   98.5% of its training images right and 57.0% of unseen ones (±6.9 points, 95% interval on 200
   images): it memorises. A small Keras CNN on MNIST makes a third of the errors of a dense
   network (111 vs 359 out of 10,000), which is why convolutions come next.
-- **Seven episodes and a 117-page guide**, published as PDFs and rebuilt from their LaTeX
-  sources with `make latex`.
+- **Seven episodes and a 117-page guide** as PDFs; all but Episodes I–III rebuild
+  byte-identically from their LaTeX sources with `make latex`.
 
 ## Why it matters
 
@@ -77,28 +79,37 @@ flowchart LR
 All numbers below come from `make figures` ([`scripts/make_figures.py`](scripts/make_figures.py)),
 which writes [`docs/results.json`](docs/results.json); the run is deterministic.
 
-**Width versus depth.** Five seeds per architecture, same data, learning rate and epochs.
-Adding units to a single hidden layer helps up to 32 units, then stops; a second 16-unit layer
-is enough to solve the spirals.
+**Width versus depth.** Five seeds per architecture, same data, learning rate (0.5) and
+5,000 epochs. Within that budget a second 16-unit layer solves the spirals, while a single
+layer peaks at 32 units and gets worse beyond. The single layers of 128 and 256 units span the
+same parameter range as the deep models, so parameter count does not explain the gap; training
+them 20,000 epochs closes it. With plain gradient descent and a fixed budget, depth made the
+spirals faster to learn; it was not needed to represent them, as the universal approximation
+theorem predicts for a single hidden layer.
 
-![Held-out accuracy against parameter count: one hidden layer peaks at 95.7% with 32 units, two hidden layers of 16 units reach 99.1%](docs/figures/capacity_sweep.png)
+![Held-out accuracy against parameter count: in 5,000 epochs two hidden layers of 16 units reach 99.1% and the best single layer 95.7%; with 20,000 epochs a single layer of 128 units reaches 100%](docs/figures/capacity_sweep.png)
 
-| Hidden layer widths | Parameters | Held-out accuracy, mean (min–max over 5 seeds) |
-| --- | ---: | --- |
-| 16 | 65 | 89.1% (82.7–95.0) |
-| 32 | 129 | 95.7% (93.3–97.3) |
-| 64 | 257 | 92.5% (86.7–94.7) |
-| 16-16 | 337 | 99.1% (98.7–99.3) |
-| 16-16-16 | 609 | 99.4% (99.0–99.7) |
-| 16-16-16-16 | 881 | 99.5% (99.0–100.0) |
+| Hidden layer widths | Parameters | Epochs | Held-out accuracy, mean (min–max over 5 seeds) |
+| --- | ---: | ---: | --- |
+| 16 | 65 | 5,000 | 89.1% (82.7–95.0) |
+| 32 | 129 | 5,000 | 95.7% (93.3–97.3) |
+| 64 | 257 | 5,000 | 92.5% (86.7–94.7) |
+| 128 | 513 | 5,000 | 77.9% (75.7–81.0) |
+| 256 | 1,025 | 5,000 | 77.7% (75.7–79.3) |
+| 16-16 | 337 | 5,000 | 99.1% (98.7–99.3) |
+| 16-16-16 | 609 | 5,000 | 99.4% (99.0–99.7) |
+| 16-16-16-16 | 881 | 5,000 | 99.5% (99.0–100.0) |
+| 128 | 513 | 20,000 | 100.0% (seed 0 only) |
+| 256 | 1,025 | 20,000 | 99.0% (seed 0 only) |
 
 **Where fully connected networks stop.** Trained on the 1,000 cat/dog images of Episodes IV–VII,
 the network drives training accuracy to 98.5% while test accuracy hovers between 50% and 60.5%
-and ends at 57.0%. A flattened image throws away which pixels are neighbours; the network
-can only memorise. Episode VI's notebook shows the same thing with two layers (97.4% train,
-52.0% test).
+and ends at 57.0%. The losses tell the same story: training log-loss falls to 0.09 while test
+log-loss rises from about 0.7 (a coin flip scores ln 2 ≈ 0.69) to 1.00, so the gap is memorisation, not a failure to
+optimise. A flattened image throws away which pixels are neighbours. Episode VI's notebook
+shows the same thing with two layers (97.4% train, 52.0% test).
 
-![Train accuracy climbs to 98% while test accuracy stays between 50% and 60.5%](docs/figures/cats_dogs_overfitting.png)
+![Left: train accuracy climbs to 98% while test accuracy stays between 50% and 60.5%. Right: train log-loss falls to 0.09 while test log-loss rises to 1.00](docs/figures/cats_dogs_overfitting.png)
 
 **What convolutions buy** (Keras baselines in [`lab/`](lab/), MNIST test set of 10,000 digits):
 
@@ -125,7 +136,8 @@ Keras baselines: `make lab` (installs TensorFlow, downloads MNIST). The checked-
 ## Repository layout
 
 ```text
-notebooks/   course notebooks 01-10 + birth_of_a_neuron.py (Episode III functions)
+notebooks/   course notebooks 01-10; Episode III is birth_of_a_neuron.ipynb (name kept for
+             the links in its PDF) and birth_of_a_neuron.py holds its functions
 src/         deep_network.py, two_layer_network.py, gradient_check.py, utilities.py
 tests/       pytest: shapes, gradient checks, cross-episode agreement, known boundaries
 scripts/     make_figures.py (README experiments), smoke_test.py, episode_05_demo.py
@@ -141,7 +153,11 @@ assets/      images used by the guides and notebooks
 
 - **Spiral experiments** use one fixed 700/300 split; seeds change the initial weights only.
   Learning rate (0.5) and epochs (5,000) are the same for every architecture and were not tuned
-  per model, so the dip of the 64-unit layer may reflect optimisation rather than capacity.
+  per model. The drop of the single layers beyond 32 units is an optimisation effect, as the
+  20,000-epoch runs show; those longer runs use one seed only.
+- **Cat/dog training is at the edge of stability**: with learning rate 0.02 the training
+  accuracy zig-zags throughout and collapses once, to 57% around epoch 2,675, before recovering.
+  The final numbers are taken after the recovery.
 - **Cat/dog test set**: 200 images, so any accuracy carries about ±7 points of sampling error.
   The figure reports the last epoch; the best test accuracy seen during training (60.5%) is not
   reported as a result because picking it would use the test set for model selection.
@@ -159,8 +175,9 @@ assets/      images used by the guides and notebooks
 
 - I. Goodfellow, Y. Bengio, A. Courville, *Deep Learning*, MIT Press, 2016, ch. 6
   (feed-forward networks and back-propagation).
-- X. Glorot, Y. Bengio, "Understanding the difficulty of training deep feedforward neural
-  networks", AISTATS 2010 (the 1/√fan-in initialisation used here).
+- Y. LeCun, L. Bottou, G. B. Orr, K.-R. Müller, "Efficient BackProp", in *Neural Networks:
+  Tricks of the Trade*, Springer, 1998 (the 1/√fan-in initialisation used here); see also
+  X. Glorot, Y. Bengio, AISTATS 2010, for the variant that also scales by fan-out.
 - Y. LeCun, L. Bottou, Y. Bengio, P. Haffner, "Gradient-based learning applied to document
   recognition", Proc. IEEE, 1998 (MNIST, convolutional networks).
 - Stanford CS231n course notes, "Gradient checks" (centred differences, relative error).
