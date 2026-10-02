@@ -125,7 +125,7 @@ git clone https://github.com/Pchambet/Deep-Learning-from-Scratch.git
 cd Deep-Learning-from-Scratch
 make setup     # uv sync --locked: Python 3.12 environment from uv.lock
 make check     # ruff, 37 tests including gradient checks, smoke test, Episode V demo (~20 s)
-make figures   # the experiments above, deterministic (~5 min on a laptop CPU)
+make figures   # the experiments above, deterministic (~3 min on a laptop CPU)
 make latex     # rebuild every PDF from LaTeX (needs latexmk + TeX Live, ~1 min)
 ```
 
@@ -156,7 +156,8 @@ assets/      images used by the guides and notebooks
   per model. The drop of the single layers beyond 32 units is an optimisation effect, as the
   20,000-epoch runs show; those longer runs use one seed only.
 - **Cat/dog training is at the edge of stability**: with learning rate 0.02 the training
-  accuracy zig-zags throughout and collapses once, to 57% around epoch 2,675, before recovering.
+  accuracy zig-zags throughout and collapses twice, briefly near epoch 125 (64% to 51%, while
+  test accuracy touches its 50% low) and from 96% to 57% around epoch 2,675, before recovering.
   The final numbers are taken after the recovery.
 - **Cat/dog test set**: 200 images, so any accuracy carries about ±7 points of sampling error.
   The figure reports the last epoch; the best test accuracy seen during training (60.5%) is not

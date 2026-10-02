@@ -34,7 +34,7 @@ smoke:  ## Train the single neuron for 20 steps on the cat/dog images
 demo:  ## Episode V: two-layer network on concentric circles (figures in outputs/)
 	uv run python scripts/episode_05_demo.py
 
-figures:  ## Regenerate docs/figures/*.png and docs/results.json (~5 min)
+figures:  ## Regenerate docs/figures/*.png and docs/results.json (~3 min)
 	uv run python scripts/make_figures.py
 
 check: lint test smoke demo  ## Everything CI runs
