@@ -1,35 +1,13 @@
-# MNIST Case Study
+# MNIST with a dense network (Keras)
 
-An MLP on the MNIST dataset — from normalization to training, step by step.
-
-## Run it
-
-**Notebook:**
+A multilayer perceptron on handwritten digits: normalisation, training curves, confusion
+matrix and the misclassified digits. Keras baseline for comparison with the from-scratch
+networks of the course.
 
 ```bash
-jupyter notebook mnist.ipynb
+uv sync --group lab
+uv run --group lab jupyter lab mnist.ipynb      # notebook
+cd lab/mnist && uv run --group lab python train_mlp.py   # script, outputs in outputs/
 ```
 
-Or [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/lab/mnist/mnist.ipynb)
-
-**Script:**
-
-```bash
-make mlp
-```
-
-Outputs are saved to `outputs/`.
-
-## Dependencies
-
-Use the root `requirements.txt`, or:
-
-```bash
-pip install tensorflow numpy matplotlib
-```
-
-On Apple Silicon: `tensorflow-macos` + `tensorflow-metal`.
-
-## Dataset
-
-MNIST is downloaded automatically via `tensorflow.keras.datasets.mnist`.
+[Open in Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/lab/mnist/mnist.ipynb)

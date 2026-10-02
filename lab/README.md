@@ -1,20 +1,18 @@
-# Lab — Wide-Range Ideas Laboratory
+# Lab: Keras baselines on MNIST
 
-A place to explore and experiment. Where the course ends, the real play begins.
+The course builds every network in NumPy. The lab answers the obvious follow-up: how do
+those ideas fare against a standard framework on a standard benchmark?
 
----
+| Case study | Model | Test accuracy (MNIST, 10,000 images) | Run |
+| --- | --- | --- | --- |
+| [`mnist/`](mnist/) | Dense network 784-128-64-10 (Keras) | 96.4% (359 errors), from the notebook's saved output | [notebook](mnist/mnist.ipynb) · `train_mlp.py` |
+| [`cnn/`](cnn/) | Two conv + pooling blocks, dense head (Keras) | 98.9% (111 errors), 5 epochs | [notebook](cnn/CNN.ipynb) · `train_cnn.py` |
 
-## Case Studies
+Both need TensorFlow, which is kept out of the default environment:
 
-| Project | What's inside | How to run |
-| ------- | ------------- | ---------- |
-| [**MNIST**](mnist/) | MLP on handwritten digits — full pipeline, normalization, training curves | [Notebook](mnist/mnist.ipynb) · [Colab](https://colab.research.google.com/github/Pchambet/Deep-Learning-from-Scratch/blob/main/lab/mnist/mnist.ipynb) |
-| [**CNN**](cnn/) | Convolutions on MNIST — filters, pooling, architecture | [Notebook](cnn/CNN.ipynb) · `make train` / `python train_cnn.py` |
+```bash
+uv sync --group lab
+make lab            # runs both training scripts; artefacts go to lab/*/outputs/
+```
 
----
-
-## Philosophy
-
-> "No shortcuts. No illusions. Just code, clarity, and comprehension."
-
-The Lab extends the **Course**. Here you explore, test, and dig deeper.
+MNIST is downloaded on first use by `keras.datasets.mnist`.
