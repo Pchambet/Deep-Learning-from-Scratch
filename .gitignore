@@ -36,15 +36,3 @@ latex/**/*.fdb_latexmk
 latex/**/*.out
 latex/**/out/
 latex/**/dist/
-
-# LaTeX sources & PDFs (keep local, don't push)
-latex/
-
-# Audits & working docs (local only)
-*AUDIT*.md
-**/AUDIT*.md
-FONDATIONS*.md
-**/FONDATIONS*.md
-
-# Copilot instructions (local only)
-.github/instructions/
