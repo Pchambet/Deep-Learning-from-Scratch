@@ -163,9 +163,9 @@ def hero_figure(data, results: dict) -> None:
     fig.text(
         0.01,
         0.01,
-        "Two interleaved spirals, 700 training / 300 test points (shown). NumPy networks "
-        f"from src/deep_network.py, {SPIRAL_EPOCHS:,} full-batch epochs, learning rate "
-        f"{SPIRAL_LR}.",
+        "Two interleaved spirals, 700 training / 300 test points (shown). One run per panel "
+        f"(seed 0; 5-seed means in the README table), {SPIRAL_EPOCHS:,} full-batch epochs, "
+        f"learning rate {SPIRAL_LR}.",
         fontsize=8.5,
         color=SLATE,
     )
@@ -220,13 +220,18 @@ def capacity_sweep(data, results: dict) -> None:
             elinewidth=1,
         )
         # The deep family ends among the open 20,000-epoch markers, so its label sits
-        # under its second point, where it cannot be read as theirs.
-        anchor, offset = (1, (8, -16)) if color == TEAL else (-1, (8, -14))
+        # under its second point, where it cannot be read as theirs; the wide family is
+        # labelled under its first point, in the empty lower left.
+        if color == TEAL:
+            anchor, offset, text = 1, (8, -10), family.replace(" of 16", "\nof 16")
+        else:
+            anchor, offset, text = 0, (-4, -14), family
         ax.annotate(
-            family,
+            text,
             (p[anchor], mean[anchor]),
             xytext=offset,
             textcoords="offset points",
+            va="top",
             color=INK,
             fontsize=9,
         )
@@ -258,7 +263,7 @@ def capacity_sweep(data, results: dict) -> None:
     ax.set_xlabel("Trainable parameters (log scale)")
     ax.set_ylabel("Held-out accuracy (mean, min-max over 5 seeds)")
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(1.0, decimals=0))
-    ax.set_xlim(right=ax.get_xlim()[1] * 6)
+    ax.set_xlim(right=max(r["parameters"] for r in long_runs) * 1.3)
     ax.axhline(0.5, color=SLATE, linewidth=1, linestyle=":")
     ax.text(ax.get_xlim()[0] * 1.1, 0.51, "chance", color=SLATE, fontsize=8.5)
     best_wide = max(sweep[wide_label], key=lambda r: r["test_accuracy_mean"])
@@ -321,7 +326,6 @@ def cats_dogs(results: dict) -> None:
     ax.text(epochs[-1], final_train, f"  train {final_train:.0%}", color=INK, va="center")
     ax.text(epochs[-1], final_test, f"  test {final_test:.0%}", color=INK, va="center")
     ax.text(epochs[-1] / 2, 0.49, "chance (balanced classes)", color=SLATE, fontsize=8.5, va="top")
-    ax.set_xlim(0, epochs[-1] * 1.15)
     ax.set_ylim(0.4, 1.02)
     ax.yaxis.set_major_formatter(mticker.PercentFormatter(1.0, decimals=0))
     ax.set_xlabel("Epoch (full-batch gradient descent)")
@@ -332,8 +336,12 @@ def cats_dogs(results: dict) -> None:
     ax_loss.plot(epochs, run.val_loss, color=TEAL, linewidth=2)
     ax_loss.text(epochs[-1], final_train_loss, f"  train {final_train_loss:.2f}", color=INK)
     ax_loss.text(epochs[-1], final_test_loss, f"  test {final_test_loss:.2f}", color=INK)
-    ax_loss.set_xlim(0, epochs[-1] * 1.18)
     ax_loss.set_ylim(bottom=0)
+    # Same epoch range on both panels; the room past the last epoch holds the end labels.
+    for a in (ax, ax_loss):
+        a.set_xlim(0, IMAGE_EPOCHS * 1.18)
+        a.set_xticks(range(0, IMAGE_EPOCHS + 1, 500))
+        a.spines["bottom"].set_bounds(0, IMAGE_EPOCHS)
     ax_loss.set_xlabel("Epoch (full-batch gradient descent)")
     ax_loss.set_ylabel("Log-loss")
     ax_loss.set_title("Log-loss", loc="left", fontsize=10.5)
