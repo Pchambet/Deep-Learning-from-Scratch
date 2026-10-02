@@ -3,6 +3,7 @@
 import numpy as np
 from sklearn.datasets import make_circles
 
+from src.gradient_check import numerical_gradient, relative_error
 from src.two_layer_network import (
     backward_propagation,
     binary_cross_entropy,
@@ -89,3 +90,18 @@ class TestTwoLayerNetwork:
         acc = result["accuracy"]
         assert acc[-1] >= 0.5  # Better than random
         assert acc[-1] >= acc[0]  # Improved over training
+
+    def test_backward_propagation_matches_finite_differences(self):
+        """Analytic gradients agree with central differences of the loss."""
+        rng = np.random.default_rng(0)
+        inputs = rng.standard_normal((3, 15))
+        labels = (rng.random((1, 15)) > 0.5).astype(float)
+        params = initialize_parameters(n0=3, n1=5, n2=1, seed=1)
+        grads = backward_propagation(inputs, labels, params, forward_propagation(inputs, params))
+
+        def loss():
+            return binary_cross_entropy(labels, forward_propagation(inputs, params)["A2"])
+
+        for name in ("W1", "b1", "W2", "b2"):
+            numeric = numerical_gradient(loss, params[name])
+            assert relative_error(grads[f"d{name}"], numeric) < 1e-7, name
