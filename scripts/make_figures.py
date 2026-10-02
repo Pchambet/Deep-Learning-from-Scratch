@@ -153,7 +153,7 @@ def hero_figure(data, results: dict) -> None:
     acc = [hero[name]["test_accuracy"] for name in HERO_MODELS]
     fig.suptitle(
         f"Same data, same gradient descent: stacking layers takes held-out accuracy "
-        f"from {acc[0]:.0%} to {acc[-1]:.1%}",
+        f"from {acc[0]:.1%} to {acc[-1]:.1%}",
         x=0.01,
         ha="left",
         fontsize=13,
@@ -219,10 +219,13 @@ def capacity_sweep(data, results: dict) -> None:
             capsize=3,
             elinewidth=1,
         )
+        # The deep family ends among the open 20,000-epoch markers, so its label sits
+        # under its second point, where it cannot be read as theirs.
+        anchor, offset = (1, (8, -16)) if color == TEAL else (-1, (8, -14))
         ax.annotate(
             family,
-            (p[-1], mean[-1]),
-            xytext=(8, -22 if color == TEAL else -14),
+            (p[anchor], mean[anchor]),
+            xytext=offset,
             textcoords="offset points",
             color=INK,
             fontsize=9,
