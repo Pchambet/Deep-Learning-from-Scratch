@@ -6,14 +6,14 @@ _ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
 
-# Prefer TensorFlow on Apple Silicon per requirements.txt
+# Silence TensorFlow C++ start-up logs.
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 
-import tensorflow as tf  # noqa: E402, F401
-from tensorflow import keras  # noqa: E402
-from tensorflow.keras import layers  # noqa: E402
+import tensorflow as tf  # noqa: F401
+from tensorflow import keras
+from tensorflow.keras import layers
 
-from lab.common import save_training_curves, set_seed  # noqa: E402
+from lab.common import save_training_curves, set_seed
 
 
 def load_mnist():

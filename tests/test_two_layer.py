@@ -73,9 +73,7 @@ class TestTwoLayerNetwork:
         # API: inputs (n_features, n_samples), labels (n_classes, n_samples)
         inputs = X.T.astype(np.float64)
         labels = np.vstack([y, 1 - y]).astype(np.float64)  # one-hot style (2, n)
-        result = fit_two_layer_network(
-            inputs, labels, n1=8, learning_rate=0.5, epochs=200, seed=42
-        )
+        result = fit_two_layer_network(inputs, labels, n1=8, learning_rate=0.5, epochs=200, seed=42)
         loss = result["loss"]
         # Loss should generally decrease (allow some fluctuation)
         initial_avg = np.mean(loss[:20])
@@ -87,9 +85,7 @@ class TestTwoLayerNetwork:
         X, y = make_circles(n_samples=100, noise=0.05, random_state=42)
         inputs = X.T.astype(np.float64)
         labels = np.vstack([y, 1 - y]).astype(np.float64)
-        result = fit_two_layer_network(
-            inputs, labels, n1=8, learning_rate=0.5, epochs=300, seed=42
-        )
+        result = fit_two_layer_network(inputs, labels, n1=8, learning_rate=0.5, epochs=300, seed=42)
         acc = result["accuracy"]
         assert acc[-1] >= 0.5  # Better than random
         assert acc[-1] >= acc[0]  # Improved over training

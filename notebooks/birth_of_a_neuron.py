@@ -53,7 +53,7 @@ def artificial_neuron(X, y, learning_rate=0.1, num_iter=100):
     W, b = initialisation(X)
     loss = []
 
-    for i in range(num_iter):
+    for _ in range(num_iter):
         A = model(X, W, b)
         loss.append(log_loss(A, y))
         dW, db = gradients(A, X, y)

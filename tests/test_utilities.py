@@ -26,13 +26,9 @@ class TestLoadData:
     def test_dtypes(self):
         X_train, y_train, X_test, y_test = load_data()
         assert X_train.dtype in (np.uint8, np.float32, np.float64)
-        assert np.issubdtype(y_train.dtype, np.floating) or np.issubdtype(
-            y_train.dtype, np.integer
-        )
+        assert np.issubdtype(y_train.dtype, np.floating) or np.issubdtype(y_train.dtype, np.integer)
         assert X_test.dtype in (np.uint8, np.float32, np.float64)
-        assert np.issubdtype(y_test.dtype, np.floating) or np.issubdtype(
-            y_test.dtype, np.integer
-        )
+        assert np.issubdtype(y_test.dtype, np.floating) or np.issubdtype(y_test.dtype, np.integer)
 
     def test_x_in_valid_range(self):
         """X values in [0, 255] for uint8 or normalized."""
@@ -46,8 +42,8 @@ class TestLoadData:
         _, y_train, _, y_test = load_data()
         yt = np.ravel(y_train)
         ye = np.ravel(y_test)
-        assert set(np.unique(yt)).issubset({0, 1, 0.0, 1.0})
-        assert set(np.unique(ye)).issubset({0, 1, 0.0, 1.0})
+        assert set(np.unique(yt)).issubset({0, 1})
+        assert set(np.unique(ye)).issubset({0, 1})
 
     def test_deterministic_when_synthetic(self):
         """Same seed → same data when using fallback (no HDF5)."""

@@ -17,31 +17,17 @@ def set_seed(seed: int = 42):
         pass
 
 
-def save_training_curves(history, output_path: str, dpi: int = 150) -> bool:
-    """
-    Save loss and accuracy curves from a Keras History object.
-    Returns True on success, False on failure (logs warning).
-    """
-    try:
-        import matplotlib.pyplot as plt
+def save_training_curves(history, output_path: str, dpi: int = 150) -> None:
+    """Save train/validation loss and accuracy curves from a Keras History object."""
+    import matplotlib.pyplot as plt
 
-        plt.figure(figsize=(10, 4))
-        plt.subplot(1, 2, 1)
-        plt.plot(history.history["loss"], label="train")
-        plt.plot(history.history["val_loss"], label="val")
-        plt.title("Loss")
-        plt.legend()
-
-        plt.subplot(1, 2, 2)
-        plt.plot(history.history["accuracy"], label="train")
-        plt.plot(history.history["val_accuracy"], label="val")
-        plt.title("Accuracy")
-        plt.legend()
-
-        plt.tight_layout()
-        plt.savefig(output_path, dpi=dpi)
-        plt.close()
-        return True
-    except Exception as e:
-        print(f"Warning: could not save curves: {e}")
-        return False
+    fig, (ax_loss, ax_acc) = plt.subplots(1, 2, figsize=(10, 4))
+    for ax, metric in ((ax_loss, "loss"), (ax_acc, "accuracy")):
+        ax.plot(history.history[metric], label="train")
+        ax.plot(history.history[f"val_{metric}"], label="validation")
+        ax.set_title(metric.capitalize())
+        ax.set_xlabel("Epoch")
+        ax.legend()
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=dpi)
+    plt.close(fig)

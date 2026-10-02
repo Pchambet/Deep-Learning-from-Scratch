@@ -14,7 +14,7 @@ from birth_of_a_neuron import gradients, initialisation, model, predict, update
 from sklearn.metrics import accuracy_score
 from tqdm import tqdm
 
-from src.utilities import load_data  # noqa: E402
+from src.utilities import load_data
 
 
 def run_smoke(iterations=20, learning_rate=0.01):

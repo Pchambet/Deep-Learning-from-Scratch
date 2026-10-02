@@ -12,7 +12,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
 sys.path.insert(0, ROOT)
 
-from src.two_layer_network import fit_two_layer_network, predict  # noqa: E402
+from src.two_layer_network import fit_two_layer_network, predict
 
 
 def plot_training_curves(loss_values, accuracy_values, output_path):
@@ -65,11 +65,15 @@ def main():
         seed=42,
     )
 
-    output_dir = os.path.join(ROOT, "assets", "figures", "episode_05")
+    output_dir = os.path.join(ROOT, "outputs", "episode_05")
     os.makedirs(output_dir, exist_ok=True)
 
-    plot_training_curves(run["loss"], run["accuracy"], os.path.join(output_dir, "training_curves.png"))
-    plot_decision_boundary(x, y, run["parameters"], os.path.join(output_dir, "decision_boundary.png"))
+    plot_training_curves(
+        run["loss"], run["accuracy"], os.path.join(output_dir, "training_curves.png")
+    )
+    plot_decision_boundary(
+        x, y, run["parameters"], os.path.join(output_dir, "decision_boundary.png")
+    )
 
     final_accuracy = run["accuracy"][-1]
     final_loss = run["loss"][-1]

@@ -1,24 +1,52 @@
+[project]
+name = "deep-learning-from-scratch"
+version = "1.0.0"
+description = "Neural networks rebuilt from first principles in NumPy: one neuron, two layers, any depth."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Pierre Chambet" }]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "h5py>=3.11",
+    "matplotlib>=3.9",
+    "numpy>=2.0",
+    "plotly>=5.24",
+    "scikit-learn>=1.5",
+    "tqdm>=4.66",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29",
+    "jupyterlab>=4.2",
+    "nbconvert>=7.16",
+    "pytest>=8.3",
+    "ruff>=0.13",
+]
+# Keras baselines in lab/ (opt-in: `uv sync --group lab`).
+lab = [
+    "seaborn>=0.13",
+    "tensorflow>=2.18",
+]
+
+[tool.uv]
+# The repository is a course, not an installable library: modules are imported
+# from the repository root (`from src.deep_network import ...`).
+package = false
+
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py312"
+extend-exclude = ["*.ipynb", "latex"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I"]
-ignore = ["E501"]
+extend-select = ["I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+# Scripts put the repository root on sys.path before importing local modules.
+"scripts/*.py" = ["E402"]
+"lab/*/*.py" = ["E402"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-addopts = "-v"
-
-[tool.ruff.lint.per-file-ignores]
-# Scripts set sys.path before imports (run from repo root)
-"scripts/*.py" = ["E402"]
-"notebooks/run_04_test.py" = ["E402"]
-"lab/mnist/train_mlp.py" = ["E402"]
-"lab/cnn/train_cnn.py" = ["E402"]
-
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-line-ending = "lf"

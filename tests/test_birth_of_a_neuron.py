@@ -97,9 +97,7 @@ class TestBirthOfANeuron:
         # Numerical db
         b_plus = b + eps
         b_minus = b - eps
-        db_num = (log_loss(model(X, W, b_plus), y) - log_loss(model(X, W, b_minus), y)) / (
-            2 * eps
-        )
+        db_num = (log_loss(model(X, W, b_plus), y) - log_loss(model(X, W, b_minus), y)) / (2 * eps)
 
         np.testing.assert_allclose(dW_ana, dW_num, rtol=1e-3, atol=1e-2)
         np.testing.assert_allclose(db_ana, db_num, rtol=1e-3, atol=1e-2)

@@ -3,6 +3,7 @@
 .vscode/
 
 # Python
+.ruff_cache/
 __pycache__/
 .pytest_cache/
 *.pyc
@@ -19,13 +20,8 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
-# Data
-data/*.hdf5
-
-# Figures
-assets/figures/*.png
-
-# Lab outputs
+# Script and lab outputs
+outputs/
 lab/*/outputs/
 
 # LaTeX build artifacts
